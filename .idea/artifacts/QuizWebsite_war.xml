@@ -7,7 +7,7 @@
         <packaging>war</packaging>
       </options>
     </properties>
-    <root id="archive" name="QuizWebsite.war">
+    <root id="archive" name="oop-final-project-bugslayer.war">
       <element id="artifact" artifact-name="QuizWebsite:war exploded" />
     </root>
   </artifact>
