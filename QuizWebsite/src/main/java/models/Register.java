@@ -28,7 +28,9 @@ public class Register {
      */
     public boolean registerAccount(Account account) {
         if (isValid(account)) {
-            PasswordGenerator generator = new PasswordGenerator(account.getPassword());
+            String salt = SaltGenerator.generateSalt();
+            String saltedPassword = account.getPassword() + salt;
+            PasswordGenerator generator = new PasswordGenerator(saltedPassword);
             String hashedPassword = generator.getHashedPassword();
             account.setHashedPassword(hashedPassword);
             users.add(account);

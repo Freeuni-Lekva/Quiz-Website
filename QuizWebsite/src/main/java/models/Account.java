@@ -8,6 +8,7 @@ public class Account {
     private String userName;
     private String password;
     private String userType;
+    private String salt;
     private int id;
 
     /**
@@ -20,6 +21,14 @@ public class Account {
         this.userName = userName;
         this.password = password;
         this.userType = userType;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
+    public String getSalt() {
+        return salt;
     }
 
     /**
