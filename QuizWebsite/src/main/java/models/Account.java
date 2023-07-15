@@ -23,6 +23,21 @@ public class Account {
         this.userType = userType;
     }
 
+    /**
+     * Account constructor for getting data from database when salt is avaliable
+     * and stored for this account
+     * @param userName  The username of the account.
+     * @param password  The password of the account.
+     * @param userType  The type of the user account.
+     * @param salt The salt which was created and saved after registration
+     */
+    public Account(String userName, String password, String userType, String salt) {
+        this.userName = userName;
+        this.password = password;
+        this.userType = userType;
+        this.salt = salt;
+    }
+
     public void setSalt(String salt) {
         this.salt = salt;
     }
