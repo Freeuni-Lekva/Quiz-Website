@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Account</title>
+</head>
+<body>
+<h1>Create New Acount</h1>
+<form action="RegisterServlet" method="post">
+  <input type="text" placeholder="User Name" name="username">
+  <br>
+  <input type="password" placeholder="Password" name="password">
+  <br>
+  <select id="select" name="select">
+    <option disabled selected>Select user type</option>
+    <option value="user">USER</option>
+    <option value="admin">ADMIN</option>
+  </select>
+  <input type="submit" value="Submit" name="submit">
+</form>
+</body>
+</html>
