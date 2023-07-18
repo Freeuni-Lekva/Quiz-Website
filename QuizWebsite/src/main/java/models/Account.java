@@ -1,30 +1,33 @@
 package models;
+
 /**
  * The Account class represents a user account, including information such as the username, password,
  * user type, and account ID. It is used for registration, login, and retrieving information from the database
  * and then wrapping that information.
  */
 public class Account {
-    private String userName;
+    private String username;
     private String password;
     private String userType;
     private int id;
 
     /**
      * Account constructor.
-     * @param userName  The username of the account.
-     * @param password  The password of the account.
-     * @param userType  The type of the user account.
+     *
+     * @param username The username of the account.
+     * @param password The password of the account.
+     * @param userType The type of the user account.
      */
-    public Account(String userName, String password, String userType) {
-        this.userName = userName;
+    public Account(int id, String username, String password, String userType) {
+        this.username = username;
         this.password = password;
         this.userType = userType;
     }
 
     /**
      * Sets the account ID.
-     * @param id  The unique identifier for the account.
+     *
+     * @param id The unique identifier for the account.
      */
     public void setId(int id) {
         this.id = id;
@@ -33,6 +36,7 @@ public class Account {
     /**
      * This method is needed for security and passing Account with already hashed password
      * to the UsersDao class for adding new account to the DataBase.
+     *
      * @param hashedPassword already hashed password
      */
     public void setHashedPassword(String hashedPassword) {
@@ -41,6 +45,7 @@ public class Account {
 
     /**
      * Retrieves the account ID.
+     *
      * @return The unique identifier for the account.
      */
     public int getId() {
@@ -49,6 +54,7 @@ public class Account {
 
     /**
      * Retrieves the account password.
+     *
      * @return The password of the account.
      */
     public String getPassword() {
@@ -57,14 +63,16 @@ public class Account {
 
     /**
      * Retrieves the account username.
+     *
      * @return The username of the account.
      */
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
     /**
      * Retrieves the user type of the account.
+     *
      * @return The type of the user account.
      */
     public String getUserType() {
