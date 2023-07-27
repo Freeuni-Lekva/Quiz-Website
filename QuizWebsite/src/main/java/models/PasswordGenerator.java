@@ -3,11 +3,26 @@ package models;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * This class generates hashed passwords for the passed password
+ * in constructor. class is needed for registration and
+ * verifying the authenticity of a user's credentials
+ */
 public class PasswordGenerator {
     private String password;
+
+    /**
+     * Constructor for creating instance of this class with associated password
+     * @param password that should be hashed and returned in other method
+     */
     public PasswordGenerator(String password) {
         this.password = password;
     }
+
+    /**
+     * This method hashes field password with SHA algorithm
+     * @return hashed password
+     */
     public String getHashedPassword() {
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("SHA");
