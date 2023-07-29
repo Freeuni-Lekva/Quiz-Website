@@ -1,7 +1,9 @@
 package servlets;
 
+import dao.UsersDao;
 import models.LoginChecker;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +32,9 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         String username = httpServletRequest.getParameter("username");
         String password = httpServletRequest.getParameter("password");
-        LoginChecker check = new LoginChecker(username, password, httpServletRequest);
+        ServletContext servletContext = httpServletRequest.getServletContext();
+        UsersDao userInfo = (UsersDao) servletContext.getAttribute("users");
+        LoginChecker check = new LoginChecker(username, password, userInfo);
         if (check.isCorrect()) {
 
         } else {

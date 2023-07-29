@@ -14,12 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 public class LoginChecker {
     private final String username;
     private final String password;
-    private final HttpServletRequest httpServletRequest;
+    private final UsersDao userInfo;
 
-    public LoginChecker(String username, String password, HttpServletRequest httpServletRequest) {
+    public LoginChecker(String username, String password, UsersDao userInfo) {
         this.username = username;
         this.password = password;
-        this.httpServletRequest = httpServletRequest;
+        this.userInfo = userInfo;
     }
 
     /*
@@ -27,13 +27,11 @@ public class LoginChecker {
      then returns true, otherwise returns false
      */
     public boolean isCorrect() {
-        ServletContext servletContext = httpServletRequest.getServletContext();
-        UsersDao userInfo = (UsersDao) servletContext.getAttribute("users");
         Account userAccount = userInfo.getAccount(username);
         if (userAccount == null) {
             return false;
         }
-        PasswordGenerator passwordGenerator = new PasswordGenerator(password);
-        return userInfo.getPassword(username).equals(passwordGenerator.getHashedPassword());
+        PasswordGenerator passwordGenerator = new PasswordGenerator(password + userAccount.getSalt());
+        return userAccount.getPassword().equals(passwordGenerator.getHashedPassword());
     }
 }
