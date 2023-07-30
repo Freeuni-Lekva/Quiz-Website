@@ -1,6 +1,6 @@
 package dao;
 
-import models.Account;
+import models.User;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 public class UsersDao {
@@ -8,13 +8,13 @@ public class UsersDao {
     }
     public UsersDao(BasicDataSource basicDataSource) {
     }
-    public void add(Account account) {
+    public void add(User account) {
     }
     public String getPassword(String userName) {
         return null;
     }
 
-    public Account getAccount(String userName) {
+    public User getUser(String userName) {
         return null;
     }
 }

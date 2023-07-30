@@ -2,36 +2,36 @@ package test;
 
 import dao.UsersDao;
 import junit.framework.TestCase;
-import models.Account;
 import models.Register;
+import models.User;
 import org.junit.Test;
 
 public class TestRegister extends TestCase {
-    class MockUsers extends UsersDao {
+    static class MockUsers extends UsersDao {
         @Override
-        public void add(Account account) {}
+        public void add(User account) {}
         @Override
-        public Account getAccount(String userName) {
-            return new Account(userName, "123123", "user");
+        public User getUser(String userName) {
+            return new User(userName, "123123", "user");
         }
     }
     @Test
     public void testRegister() {
         MockUsers users = new MockUsers();
         Register register = new Register(users);
-        Account account = new Account("", "", null);
+        User account = new User("", "", null);
         assertFalse(register.registerAccount(account));
-        account = new Account("", "", "");
+        account = new User("", "", "");
         assertFalse(register.registerAccount(account));
-        account = new Account("jon", "", "");
+        account = new User("jon", "", "");
         assertFalse(register.registerAccount(account));
-        account = new Account("jon", "1234", "");
+        account = new User("jon", "1234", "");
         assertFalse(register.registerAccount(account));
-        account = new Account("jon", "1234", null);
+        account = new User("jon", "1234", null);
         assertFalse(register.registerAccount(account));
-        account = new Account("jon", "1234", "user");
+        account = new User("jon", "1234", "user");
         assertTrue(register.registerAccount(account));
-        account = new Account("alice", "1234567", "admin");
+        account = new User("alice", "1234567", "admin");
         assertTrue(register.registerAccount(account));
     }
 }

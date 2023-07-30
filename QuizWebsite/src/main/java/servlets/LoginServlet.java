@@ -40,7 +40,7 @@ public class LoginServlet extends HttpServlet {
         if (check.isCorrect()) {
             RequestDispatcher dispatcher = httpServletRequest.getRequestDispatcher("/homepage.jsp");
             HttpSession session = httpServletRequest.getSession();
-            session.setAttribute("loggedUser", userInfo.getAccount(username));
+            session.setAttribute("loggedUser", userInfo.getUser(username));
             dispatcher.forward(httpServletRequest, httpServletResponse);
         } else {
             httpServletRequest.getRequestDispatcher("login/loginFailed.jsp").forward(httpServletRequest, httpServletResponse);
