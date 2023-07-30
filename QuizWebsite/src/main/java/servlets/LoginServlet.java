@@ -3,11 +3,13 @@ package servlets;
 import dao.UsersDao;
 import models.LoginChecker;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /*
@@ -36,7 +38,10 @@ public class LoginServlet extends HttpServlet {
         UsersDao userInfo = (UsersDao) servletContext.getAttribute("users");
         LoginChecker check = new LoginChecker(username, password, userInfo);
         if (check.isCorrect()) {
-
+            RequestDispatcher dispatcher = httpServletRequest.getRequestDispatcher("/homepage.jsp");
+            HttpSession session = httpServletRequest.getSession();
+            session.setAttribute("loggedUser", userInfo.getUser(username));
+            dispatcher.forward(httpServletRequest, httpServletResponse);
         } else {
             httpServletRequest.getRequestDispatcher("login/loginFailed.jsp").forward(httpServletRequest, httpServletResponse);
         }

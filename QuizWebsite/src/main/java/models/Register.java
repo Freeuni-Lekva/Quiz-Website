@@ -1,7 +1,6 @@
 package models;
 
 import dao.UsersDao;
-import models.Account;
 import models.PasswordGenerator;
 
 /**
@@ -26,7 +25,7 @@ public class Register {
      * @param account the Account object representing the user account to be registered.
      * @return true if the account was successfully registered, false otherwise.
      */
-    public boolean registerAccount(Account account) {
+    public boolean registerAccount(User account) {
         if (isValid(account)) {
             String salt = SaltGenerator.generateSalt();
             String saltedPassword = account.getPassword() + salt;
@@ -47,11 +46,11 @@ public class Register {
      * @param account the Account object to be validated.
      * @return true if the account is valid, false otherwise.
      */
-    private boolean isValid(Account account) {
+    private boolean isValid(User account) {
         return account.getUserType() != null
                 && !account.getUserType().isEmpty()
                 && !account.getUserName().isEmpty()
                 && !account.getPassword().isEmpty()
-                && users.getAccount(account.getUserName()) != null;
+                && users.getUser(account.getUserName()) == null;
     }
 }
