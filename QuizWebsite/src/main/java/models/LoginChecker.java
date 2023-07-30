@@ -27,7 +27,7 @@ public class LoginChecker {
      then returns true, otherwise returns false
      */
     public boolean isCorrect() {
-        Account userAccount = userInfo.getAccount(username);
+        User userAccount = userInfo.getUser(username);
         if (userAccount == null) {
             return false;
         }

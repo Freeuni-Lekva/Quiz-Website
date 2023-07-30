@@ -1,10 +1,10 @@
 package models;
 /**
- * The Account class represents a user account, including information such as the username, password,
- * user type, and account ID. It is used for registration, login, and retrieving information from the database
+ * The User class represents a user account, including information such as the username, password,
+ * user type, and user ID. It is used for registration, login, and retrieving information from the database
  * and then wrapping that information.
  */
-public class Account {
+public class User {
     private String userName;
     private String password;
     private String userType;
@@ -12,42 +12,57 @@ public class Account {
     private int id;
 
     /**
-     * Account constructor.
-     * @param userName  The username of the account.
-     * @param password  The password of the account.
-     * @param userType  The type of the user account.
+     * User constructor.
+     * @param userName  The username of the user.
+     * @param password  The password of the user.
+     * @param userType  The type of the user.
      */
-    public Account(String userName, String password, String userType) {
+    public User(String userName, String password, String userType) {
         this.userName = userName;
         this.password = password;
         this.userType = userType;
     }
 
     /**
-     * Account constructor for getting data from database when salt is avaliable
+     * Account constructor for getting data from database when salt is available
      * and stored for this account
-     * @param userName  The username of the account.
-     * @param password  The password of the account.
-     * @param userType  The type of the user account.
+     * @param userName  The username of the user.
+     * @param password  The password of the user.
+     * @param userType  The type of the user.
      * @param salt The salt which was created and saved after registration
      */
-    public Account(String userName, String password, String userType, String salt) {
+    public User(String userName, String password, String userType, String salt) {
         this.userName = userName;
         this.password = password;
         this.userType = userType;
         this.salt = salt;
     }
 
+    public User(int id, String userName, String password, String userType, String salt) {
+        this.id = id;
+        this.userName = userName;
+        this.password = password;
+        this.userType = userType;
+        this.salt = salt;
+    }
+
+    /**
+     * This method is setting generated salt for the user. lately it would be saved on db
+     */
     public void setSalt(String salt) {
         this.salt = salt;
     }
 
+    /**
+     * This method returns already generated salt of a user
+     * @return salt
+     */
     public String getSalt() {
         return salt;
     }
 
     /**
-     * Sets the account ID.
+     * Sets the user ID.
      * @param id  The unique identifier for the account.
      */
     public void setId(int id) {
@@ -55,7 +70,7 @@ public class Account {
     }
 
     /**
-     * This method is needed for security and passing Account with already hashed password
+     * This method is needed for security and passing user with already hashed password
      * to the UsersDao class for adding new account to the DataBase.
      * @param hashedPassword already hashed password
      */
@@ -72,7 +87,7 @@ public class Account {
     }
 
     /**
-     * Retrieves the account password.
+     * Retrieves the user password.
      * @return The password of the account.
      */
     public String getPassword() {
@@ -80,16 +95,16 @@ public class Account {
     }
 
     /**
-     * Retrieves the account username.
-     * @return The username of the account.
+     * Retrieves the username.
+     * @return The username of the user.
      */
     public String getUserName() {
         return userName;
     }
 
     /**
-     * Retrieves the user type of the account.
-     * @return The type of the user account.
+     * Retrieves the user type of the user.
+     * @return The type of the user.
      */
     public String getUserType() {
         return userType;

@@ -1,8 +1,8 @@
 package servlets;
 
 import dao.UsersDao;
-import models.Account;
 import models.Register;
+import models.User;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -26,9 +26,9 @@ public class RegisterServlet extends HttpServlet {
         String password = httpServletRequest.getParameter("password");
         String userType = httpServletRequest.getParameter("select");
         Register register = new Register(users);
-        Account account = new Account(userName, password, userType);
+        User user = new User(userName, password, userType);
         RequestDispatcher dispatcher;
-        if (register.registerAccount(account)) {
+        if (register.registerAccount(user)) {
             dispatcher = servletContext.getRequestDispatcher("/register/RegisterSuccessful.jsp");
         } else {
             dispatcher = servletContext.getRequestDispatcher("/register/RegisterFailed.jsp");

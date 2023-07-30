@@ -1,18 +1,18 @@
 package test;
 
 import junit.framework.TestCase;
-import models.Account;
 import models.PasswordGenerator;
+import models.User;
 import org.junit.Test;
 
-public class TestAccount extends TestCase {
+public class TestUser extends TestCase {
     @Test
     public void testGetMethods() {
-        Account user = new Account("jon", "1234", "user");
+        User user = new User("jon", "1234", "user");
         assertTrue(user.getUserName().equals("jon"));
         assertTrue(user.getPassword().equals("1234"));
         assertTrue(user.getUserType().equals("user"));
-        Account admin = new Account("alice", "5678", "admin");
+        User admin = new User("alice", "5678", "admin");
         assertTrue(admin.getUserName().equals("alice"));
         assertTrue(admin.getPassword().equals("5678"));
         assertTrue(admin.getUserType().equals("admin"));
@@ -20,9 +20,9 @@ public class TestAccount extends TestCase {
 
     @Test
     public void testSetMethods() {
-        Account user = new Account("jon", "1234", "user");
+        User user = new User("jon", "1234", "user");
         user.setId(1);
-        Account admin = new Account("alice", "5678", "admin");
+        User admin = new User("alice", "5678", "admin");
         admin.setId(2);
         assertEquals(1, user.getId());
         assertEquals(2, admin.getId());
@@ -37,7 +37,7 @@ public class TestAccount extends TestCase {
 
     @Test
     public void testPasswords() {
-        Account account = new Account("alice",
+        User account = new User("alice",
                 "83ad639ec34a918055309da7189c2ca7fd5b8101",
                 "admin", "f1ndNem0");
         String saltedPassword = "1234" + account.getSalt();

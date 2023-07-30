@@ -1,4 +1,5 @@
 package test;
 
-public class Test {
+public class 
+est {
 }
