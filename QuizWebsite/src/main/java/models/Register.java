@@ -52,6 +52,6 @@ public class Register {
                 && !account.getUserType().isEmpty()
                 && !account.getUserName().isEmpty()
                 && !account.getPassword().isEmpty()
-                && users.getAccount(account.getUserName()) != null;
+                && users.getAccount(account.getUserName()) == null;
     }
 }
