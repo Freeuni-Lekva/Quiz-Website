@@ -1,5 +1,5 @@
 <%@ page import="dao.UsersDao" %>
-<%@ page import="models.Account" %>
+<%@ page import="models.User" %>
 <%@ page import="dao.FriendsDao" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
@@ -12,17 +12,17 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    Account user = null;
-    List<Account> friendsList = new ArrayList<>();
+    User user = null;
+    List<User> friendsList = new ArrayList<>();
     String id = request.getParameter("id");
     if(id == null){
 
     }else{
         UsersDao users = (UsersDao) application.getAttribute("users");
         FriendsDao friends = (FriendsDao) application.getAttribute("friends");
-        user = users.getAccount(id);
+        user = users.getUser(id);
         List<Integer> friendsId = friends.getFriends(Integer.parseInt(id));
-        for(int fId : friendsId) friendsList.add(users.getAccount(String.valueOf(fId)));
+        for(int fId : friendsId) friendsList.add(users.getUser(String.valueOf(fId)));
     }
 %>
 <html>
@@ -35,7 +35,7 @@
     <h1><%= user.getUserName() %>!</h1>
     <p>Friends:</p>
     <ul>
-        <% for (Account friend : friendsList) { %>
+        <% for (User friend : friendsList) { %>
         <li>
             <a href="${pageContext.request.contextPath}/user?id=<%= friend.getId() %>"><%= friend.getUserName() %></a>
         </li>
