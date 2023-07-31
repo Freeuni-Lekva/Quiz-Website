@@ -1,20 +1,53 @@
 package dao;
 
 import models.User;
-import org.apache.commons.dbcp2.BasicDataSource;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class UsersDao {
-    public UsersDao() {
-    }
-    public UsersDao(BasicDataSource basicDataSource) {
-    }
-    public void add(User account) {
-    }
-    public String getPassword(String userName) {
-        return null;
+    private Connection conn;
+
+
+    public UsersDao(Connection conn) {
+        this.conn = conn;
     }
 
-    public User getUser(String userName) {
-        return null;
+    public UsersDao() {
+
+    }
+
+
+    public void add(User user) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO users (username, password, user_type, salt) VALUES (?, ?, ?, ?)",
+                PreparedStatement.RETURN_GENERATED_KEYS);
+        ps.setString(1, user.getUsername());
+        ps.setString(2, user.getPassword());
+        ps.setString(3, user.getUserType());
+        ps.setString(4, user.getSalt());
+        ps.executeUpdate();
+        ResultSet rs = ps.getGeneratedKeys();
+        rs.next();
+        int id = rs.getInt(1);
+        user.setId(id);
+    }
+
+    public String getPassword(String username) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE username = ?");
+        ps.setString(1, username);
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+        return rs.getString("password");
+    }
+
+    public User getUser(String username) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE username = ?");
+        ps.setString(1, username);
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+        return new User(rs.getString("username"), rs.getString("password"),
+                rs.getString("user_type"));
     }
 }
