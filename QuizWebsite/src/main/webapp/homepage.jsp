@@ -13,10 +13,10 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-<h1>Hi this is your homepage</h1>
 <%
     User user = (User) request.getSession().getAttribute("loggedUser");
 %>
+<h1>Welcome <%= user.getUsername() %></h1>
 <main>
     <div class="search-container">
         <input type="text" id="search-input" placeholder="Search...">
@@ -24,10 +24,6 @@
     </div>
     <div class="search-users show">
         <ol id="search-users-list">
-            <li>
-                <p><a href="#">first</a></p>
-            </li>
-
         </ol>
     </div>
 
