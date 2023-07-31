@@ -57,9 +57,11 @@ public class UsersDao {
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE username = ?");
             ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
-            rs.next();
-            return new User(rs.getInt("user_id"), rs.getString("username"), rs.getString("password"),
-                    rs.getString("user_type"), rs.getString("salt"));
+            if (rs.next()) {
+                return new User(rs.getInt("user_id"), rs.getString("username"), rs.getString("password"),
+                        rs.getString("user_type"), rs.getString("salt"));
+            }
+            return null;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
