@@ -13,6 +13,6 @@
 <body>
   <h1>Registration Successful</h1>
   <p>Congratulations <%= request.getParameter("username") %>! Registration was successful</p>
-  <a href="../index.jsp">Go to HomePage</a>
+  <a href="/login/login.jsp">Now login</a>
 </body>
 </html>

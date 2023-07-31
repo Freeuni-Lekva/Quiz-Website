@@ -21,7 +21,7 @@ public class SearchServlet extends HttpServlet {
         StringBuilder json = new StringBuilder("{ \"list\": [");
         for (int i = 0; i < usersList.size(); i++) {
             User user = usersList.get(i);
-            String username = user.getUserName();
+            String username = user.getUsername();
             int userId = user.getId();
             String curObj = "{ \"username\": \"" + username
                     + "\", \"link\": " + "\"/user?id=" + Integer.toString(userId) + "\"}";
