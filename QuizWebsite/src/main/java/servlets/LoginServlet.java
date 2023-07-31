@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 
 /*
  When user welcomes /login url LoginServlet will be called.
@@ -37,13 +38,17 @@ public class LoginServlet extends HttpServlet {
         ServletContext servletContext = httpServletRequest.getServletContext();
         UsersDao userInfo = (UsersDao) servletContext.getAttribute("users");
         LoginChecker check = new LoginChecker(username, password, userInfo);
-        if (check.isCorrect()) {
-            RequestDispatcher dispatcher = httpServletRequest.getRequestDispatcher("/homepage.jsp");
-            HttpSession session = httpServletRequest.getSession();
-            session.setAttribute("loggedUser", userInfo.getUser(username));
-            dispatcher.forward(httpServletRequest, httpServletResponse);
-        } else {
-            httpServletRequest.getRequestDispatcher("login/loginFailed.jsp").forward(httpServletRequest, httpServletResponse);
+        try {
+            if (check.isCorrect()) {
+                RequestDispatcher dispatcher = httpServletRequest.getRequestDispatcher("/homepage.jsp");
+                HttpSession session = httpServletRequest.getSession();
+                session.setAttribute("loggedUser", userInfo.getUser(username));
+                dispatcher.forward(httpServletRequest, httpServletResponse);
+            } else {
+                httpServletRequest.getRequestDispatcher("login/loginFailed.jsp").forward(httpServletRequest, httpServletResponse);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }

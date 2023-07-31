@@ -4,6 +4,7 @@ import dao.UsersDao;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import java.sql.SQLException;
 
 /*
  LoginChecker class takes three parameters in constructor:
@@ -26,7 +27,7 @@ public class LoginChecker {
      Checks if user input(username, password) is correct
      then returns true, otherwise returns false
      */
-    public boolean isCorrect() {
+    public boolean isCorrect() throws SQLException {
         User userAccount = userInfo.getUser(username);
         if (userAccount == null) {
             return false;
