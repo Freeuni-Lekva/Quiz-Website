@@ -29,14 +29,11 @@ public class RegisterServlet extends HttpServlet {
         Register register = new Register(users);
         User user = new User(userName, password, userType);
         RequestDispatcher dispatcher;
-        try {
-            if (register.registerAccount(user)) {
-                dispatcher = servletContext.getRequestDispatcher("/register/RegisterSuccessful.jsp");
-            } else {
-                dispatcher = servletContext.getRequestDispatcher("/register/RegisterFailed.jsp");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+
+        if (register.registerAccount(user)) {
+            dispatcher = servletContext.getRequestDispatcher("/register/RegisterSuccessful.jsp");
+        } else {
+            dispatcher = servletContext.getRequestDispatcher("/register/RegisterFailed.jsp");
         }
         dispatcher.forward(httpServletRequest, httpServletResponse);
     }
