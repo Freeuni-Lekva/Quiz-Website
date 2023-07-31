@@ -21,6 +21,7 @@ function getUsers() {
             return res.json();
         })
         .then((obj) => {
+            usersList.innerHTML = ""; // empty last searchs
             obj.list.map((user) => {
                 let liTag = document.createElement("li");
                 liTag.innerHTML = `<p><a href="${user.link}">${user.username}</a></p>`;

@@ -69,6 +69,9 @@ public class UsersDao {
 
     public List<User> searchPrefix(String usernamePrefix) {
         ArrayList<User> userList = new ArrayList<>();
+        if (usernamePrefix.isEmpty()) {
+            return userList;
+        }
         try {
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE username LIKE ?");
             ps.setString(1,  usernamePrefix + "%");
