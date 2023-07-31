@@ -6,17 +6,22 @@ import models.Register;
 import models.User;
 import org.junit.Test;
 
+import java.sql.SQLException;
+
 public class TestRegister extends TestCase {
     static class MockUsers extends UsersDao {
         @Override
-        public void add(User account) {}
+        public void add(User account) {
+        }
+
         @Override
         public User getUser(String userName) {
             return new User(userName, "123123", "user");
         }
     }
+
     @Test
-    public void testRegister() {
+    public void testRegister() throws SQLException {
         MockUsers users = new MockUsers();
         Register register = new Register(users);
         User account = new User("", "", null);

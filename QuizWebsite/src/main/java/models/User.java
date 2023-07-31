@@ -5,7 +5,7 @@ package models;
  * and then wrapping that information.
  */
 public class User {
-    private String userName;
+    private String username;
     private String password;
     private String userType;
     private String salt;
@@ -13,12 +13,12 @@ public class User {
 
     /**
      * User constructor.
-     * @param userName  The username of the user.
+     * @param username  The username of the user.
      * @param password  The password of the user.
      * @param userType  The type of the user.
      */
-    public User(String userName, String password, String userType) {
-        this.userName = userName;
+    public User(String username, String password, String userType) {
+        this.username = username;
         this.password = password;
         this.userType = userType;
     }
@@ -26,21 +26,21 @@ public class User {
     /**
      * Account constructor for getting data from database when salt is available
      * and stored for this account
-     * @param userName  The username of the user.
+     * @param username  The username of the user.
      * @param password  The password of the user.
      * @param userType  The type of the user.
      * @param salt The salt which was created and saved after registration
      */
-    public User(String userName, String password, String userType, String salt) {
-        this.userName = userName;
+    public User(String username, String password, String userType, String salt) {
+        this.username = username;
         this.password = password;
         this.userType = userType;
         this.salt = salt;
     }
 
-    public User(int id, String userName, String password, String userType, String salt) {
+    public User(int id, String username, String password, String userType, String salt) {
         this.id = id;
-        this.userName = userName;
+        this.username = username;
         this.password = password;
         this.userType = userType;
         this.salt = salt;
@@ -98,8 +98,8 @@ public class User {
      * Retrieves the username.
      * @return The username of the user.
      */
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
     /**

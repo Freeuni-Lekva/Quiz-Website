@@ -9,11 +9,11 @@ public class TestUser extends TestCase {
     @Test
     public void testGetMethods() {
         User user = new User("jon", "1234", "user");
-        assertTrue(user.getUserName().equals("jon"));
+        assertTrue(user.getUsername().equals("jon"));
         assertTrue(user.getPassword().equals("1234"));
         assertTrue(user.getUserType().equals("user"));
         User admin = new User("alice", "5678", "admin");
-        assertTrue(admin.getUserName().equals("alice"));
+        assertTrue(admin.getUsername().equals("alice"));
         assertTrue(admin.getPassword().equals("5678"));
         assertTrue(admin.getUserType().equals("admin"));
     }

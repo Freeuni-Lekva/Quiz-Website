@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class RegisterServlet extends HttpServlet {
     @Override
@@ -28,10 +29,14 @@ public class RegisterServlet extends HttpServlet {
         Register register = new Register(users);
         User user = new User(userName, password, userType);
         RequestDispatcher dispatcher;
-        if (register.registerAccount(user)) {
-            dispatcher = servletContext.getRequestDispatcher("/register/RegisterSuccessful.jsp");
-        } else {
-            dispatcher = servletContext.getRequestDispatcher("/register/RegisterFailed.jsp");
+        try {
+            if (register.registerAccount(user)) {
+                dispatcher = servletContext.getRequestDispatcher("/register/RegisterSuccessful.jsp");
+            } else {
+                dispatcher = servletContext.getRequestDispatcher("/register/RegisterFailed.jsp");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         dispatcher.forward(httpServletRequest, httpServletResponse);
     }

@@ -11,13 +11,13 @@
     <title>QuizWebsite</title>
 </head>
 <body>
-<h1>Welcome To Our Website!</h1>
+<h1>Welcome To QuizBug!</h1>
 <p>Please log in:</p>
 <form action="/login" method="post">
     <input type="text" name="username" placeholder="Username">
     <br>
     <br>
-    <input type="text" name="password" placeholder="Password">
+    <input type="password" name="password" placeholder="Password">
     <br>
     <br>
     <input type="submit" value="Log In">
