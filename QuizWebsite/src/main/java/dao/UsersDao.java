@@ -71,7 +71,7 @@ public class UsersDao {
         ArrayList<User> userList = new ArrayList<>();
         try {
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE username LIKE ?");
-            ps.setString(1, "\"" + usernamePrefix + "%\"");
+            ps.setString(1,  usernamePrefix + "%");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 userList.add(new User(rs.getInt("user_id"),
