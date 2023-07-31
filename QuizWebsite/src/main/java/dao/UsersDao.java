@@ -1,6 +1,6 @@
 package dao;
 
-import models.Account;
+import models.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,29 +16,34 @@ public class UsersDao {
     }
 
 
-    public void add(Account account) throws SQLException {
-        PreparedStatement ps = conn.prepareStatement("INSERT INTO accounts (username, password, user_type) VALUES (?, ?, ?)",
+    public void add(User user) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO users (username, password, user_type, salt) VALUES (?, ?, ?, ?)",
                 PreparedStatement.RETURN_GENERATED_KEYS);
-        ps.setString(1, account.getUsername());
-        ps.setString(2, account.getPassword());
-        ps.setString(3, account.getUserType());
+        ps.setString(1, user.getUsername());
+        ps.setString(2, user.getPassword());
+        ps.setString(3, user.getUserType());
+        ps.setString(4, user.getSalt());
         ps.executeUpdate();
         ResultSet rs = ps.getGeneratedKeys();
         rs.next();
-        long id = rs.getLong(1);
+        int id = rs.getInt(1);
         user.setId(id);
     }
 
-    public String getPassword(String username) {
-        return null;
+    public String getPassword(String username) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE username = ?");
+        ps.setString(1, username);
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+        return rs.getString("password");
     }
 
-    public Account getAccount(int uid) throws SQLException {
-        PreparedStatement ps = conn.prepareStatement("SELECT * FROM accounts WHERE id = ?");
+    public User getAccount(int uid) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE id = ?");
         ps.setInt(1, uid);
         ResultSet rs = ps.executeQuery();
         rs.next();
-        return new Account(rs.getInt("id"), rs.getString("username"), rs.getString("password"),
+        return new User(rs.getString("username"), rs.getString("password"),
                 rs.getString("user_type"));
     }
 }
