@@ -31,6 +31,7 @@ public class Register {
         if (isValid(user)) {
             String salt = SaltGenerator.generateSalt();
             String saltedPassword = user.getPassword() + salt;
+            user.setSalt(salt);
             PasswordGenerator generator = new PasswordGenerator(saltedPassword);
             String hashedPassword = generator.getHashedPassword();
             user.setHashedPassword(hashedPassword);
