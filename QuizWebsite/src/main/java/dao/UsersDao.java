@@ -1,6 +1,7 @@
 package dao;
 
 import models.User;
+<<<<<<<HEAD
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -38,9 +39,9 @@ public class UsersDao {
         return rs.getString("password");
     }
 
-    public User getAccount(int uid) throws SQLException {
-        PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE id = ?");
-        ps.setInt(1, uid);
+    public User getAccount(String username) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE username = ?");
+        ps.setString(1, username);
         ResultSet rs = ps.executeQuery();
         rs.next();
         return new User(rs.getString("username"), rs.getString("password"),
