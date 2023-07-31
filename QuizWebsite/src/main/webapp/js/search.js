@@ -1,7 +1,6 @@
 const input = document.getElementById("search-input");
 const searchBtn = document.getElementById("search-button");
 const usersList = document.getElementById("search-users-list");
-console.log(usersList);
 searchBtn.addEventListener("click", getUsers);
 input.addEventListener("keydown", (event) => {
     if (event.key == "Enter") {
@@ -17,7 +16,6 @@ function getUsers() {
     fetch(url)
         .then((res) => {
             if (!res.ok) {
-                console.log(res);
                 throw new Error("Something happened");
             }
             return res.json();

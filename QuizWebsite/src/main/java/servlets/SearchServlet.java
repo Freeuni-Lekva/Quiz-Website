@@ -18,14 +18,13 @@ public class SearchServlet extends HttpServlet {
         UsersDao usersDao = (UsersDao) httpServletRequest.getServletContext()
                 .getAttribute("users");
         List<User> usersList = usersDao.searchPrefix(usernamePrefix);
-
         StringBuilder json = new StringBuilder("{ \"list\": [");
         for (int i = 0; i < usersList.size(); i++) {
             User user = usersList.get(i);
             String username = user.getUserName();
             int userId = user.getId();
             String curObj = "{ \"username\": \"" + username
-                    + "\", \"link\": \"" + "/user?id=\"" + Integer.toString(userId) + "}";
+                    + "\", \"link\": " + "\"/user?id=" + Integer.toString(userId) + "\"}";
             if (i != usersList.size()-1) {
                 curObj += ",\n";
             }
@@ -34,7 +33,6 @@ public class SearchServlet extends HttpServlet {
         json.append("] }");
         httpServletResponse.setContentType("application/json");
         PrintWriter out = httpServletResponse.getWriter();
-
         out.print(json.toString());
     }
 
