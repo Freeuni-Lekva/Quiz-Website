@@ -17,7 +17,7 @@ public class FriendsDao {
     public void addFriend(int user_id, int friend_id) {
         try {
             PreparedStatement statement = conn.prepareStatement(
-                    "INSERT INTO " + table " (user_id, friend_id) " +
+                    "INSERT INTO " + table + " (user_id, friend_id) " +
                             "VALUES (?, ?);", Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, user_id);
             statement.setInt(2, friend_id);
