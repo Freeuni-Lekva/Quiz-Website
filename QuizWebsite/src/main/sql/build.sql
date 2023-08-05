@@ -11,6 +11,13 @@ CREATE TABLE friends
     friend_id INT
 );
 
+-- Create Friends Requests Table. This is similar to the above table
+CREATE TABLE friends_reqs
+(
+    user_id  INT,
+    friend_id INT
+);
+
 -- Create the users table. Table has 5 columns, user_id is primary
 -- and auto incremented, username should be unique for each user
 CREATE TABLE IF NOT EXISTS users (
