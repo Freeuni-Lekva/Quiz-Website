@@ -31,14 +31,6 @@ public class FriendsDao {
             statement.executeUpdate();
         } catch (SQLException throwable) {
             throwable.printStackTrace();
-        } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException throwable) {
-                    throwable.printStackTrace();
-                }
-            }
         }
     }
 
@@ -53,14 +45,6 @@ public class FriendsDao {
 
         } catch (SQLException throwable) {
             throwable.printStackTrace();
-        } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException throwable) {
-                    throwable.printStackTrace();
-                }
-            }
         }
         return l;
     }
@@ -76,14 +60,6 @@ public class FriendsDao {
             return rs.next();
         } catch (SQLException throwable) {
             throwable.printStackTrace();
-        } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException throwable) {
-                    throwable.printStackTrace();
-                }
-            }
         }
         return false;
     }
@@ -104,14 +80,6 @@ public class FriendsDao {
             statement.executeUpdate();
         } catch (SQLException throwable) {
             throwable.printStackTrace();
-        } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException throwable) {
-                    throwable.printStackTrace();
-                }
-            }
         }
     }
 }

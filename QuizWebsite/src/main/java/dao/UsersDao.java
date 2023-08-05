@@ -67,6 +67,21 @@ public class UsersDao {
         }
     }
 
+    public User getUser(int userId) {
+        try {
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE user_id = ?");
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return new User(rs.getInt("user_id"), rs.getString("username"), rs.getString("password"),
+                        rs.getString("user_type"), rs.getString("salt"));
+            }
+            return null;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public List<User> searchPrefix(String usernamePrefix) {
         ArrayList<User> userList = new ArrayList<>();
         if (usernamePrefix.isEmpty()) {
