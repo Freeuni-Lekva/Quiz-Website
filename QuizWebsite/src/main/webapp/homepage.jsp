@@ -1,4 +1,10 @@
-<%@ page import="models.User" %><%--
+<%@ page import="models.User" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.lang.reflect.Array" %>
+<%@ page import="dao.FriendsDao" %>
+<%@ page import="java.util.List" %>
+<%@ page import="dao.UsersDao" %>
+<%@ page import="java.util.stream.Collectors" %><%--
   Created by IntelliJ IDEA.
   User: nika
   Date: 30.07.23
@@ -9,67 +15,158 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-NQ08jljSnyZMe+Z7uU42xv9wjCbPX7thzYHZPqZPt7LquKXX15i2PHfJ+ybtbV8MKLg6T+R3Tf1M/sEP5V8qA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>HomePage</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 <%
     User user = (User) request.getSession().getAttribute("loggedUser");
+
+    // Get the current hour of the day
+    java.util.Calendar cal = java.util.Calendar.getInstance();
+    int hour = cal.get(java.util.Calendar.HOUR_OF_DAY);
+
+    // Decide the greeting based on the current hour
+    String greeting;
+    if (hour >= 0 && hour < 12) {
+        greeting = "Good morning";
+    } else if (hour >= 12 && hour < 18) {
+        greeting = "Good afternoon";
+    } else {
+        greeting = "Good evening";
+    }
 %>
-<h1>Welcome <%= user.getUsername() %></h1>
-<main>
-    <div class="search-container">
-        <input type="text" id="search-input" placeholder="Search...">
-        <button id="search-button">Search</button>
+    <div id="username" style="display: none;">
+        <%= user.getUsername() %>
     </div>
-    <div class="search-users show">
-        <ol id="search-users-list">
-        </ol>
+    <header class="search-container">
+        <h1 class="greet-header"><%= greeting %> <%= user.getUsername() %></h1>
+        <nav>
+            <div>
+                <input type="text" id="search-input" placeholder="Search...">
+                <button id="search-button">Search</button>
+            </div>
+            <div class="search-users">
+                <ol id="search-users-list">
+                </ol>
+            </div>
+        </nav>
+    </header>
+    <div class="flex-main">
+        <main>
+            <section class="announcements">
+            </section>
+
+            <section class="pop-quizes">
+            </section>
+
+            <section class="new-quizes">
+            </section>
+
+            <!-- Should be list of activities about users recently taken quizes -->
+            <section class="rec-quizes-act">
+            </section>
+
+            <!-- Should be list of activities about quizes which this users has created -->
+            <section class="created-quizes-act">
+            </section>
+
+            <section class="achievements">
+            </section>
+
+            <!-- Should be list of friends recent activities i.e. taken quizes,
+             achievemetns, etc. also here should be links to friends profiles and quizes
+             -->
+            <section class="friends-act">
+            </section>
+        </main>
+        <aside>
+            <%
+                //        MessageDao messageDao = (MessageDao) request.getServletContext().getAttribute("messages");
+                //        List<RequestMessage> friendReqs = messageDao.getRequests(user.getUsername());
+                //        List<ChallengeMessage> challenges = messageDao.getChallenges(user.getUsername());
+                //        List<NoteMessage> notes = messageDao.getNotes(user.getUsername());
+                FriendsDao friendsReqs = (FriendsDao) request.getServletContext().getAttribute("friends_reqs");
+                UsersDao usersDao = (UsersDao) request.getServletContext().getAttribute("users");
+                List<Integer> reqsList = friendsReqs.getFriends(user.getId());
+//                MessageDao messageDao = (MessageDao) request.getServletContext().getAttribute("messages");
+//                List<Message> notes = messageDao.getMessages(user.getUsername());
+            %>
+            <div class="requests">
+                <h3>Friend Requests: </h3>
+                <ul>
+                    <%
+                        for (Integer id : reqsList) {
+                    %>
+                    <li id="req-<%= usersDao.getUser(id).getUsername() %>">
+                        <p><%= usersDao.getUser(id).getUsername() %></p>
+                        <div>
+                            <button class="acc-btn">Accept</button>
+                            <button class="rej-btn">Reject</button>
+                        </div>
+                    </li>
+                    <%
+                        }
+                    %>
+                </ul>
+            </div>
+            <div class="challenges">
+                <h3>Quiz Challenges: </h3>
+<%--                <ul>--%>
+<%--                    <%--%>
+<%--                        for (String quizurl : quizUrls) {--%>
+<%--                    %>--%>
+<%--                    <li>--%>
+<%--                        <a href="<%= quizurl %>">Take a Quiz <%= quizurl %></a>--%>
+<%--                    </li>--%>
+<%--                    <%--%>
+<%--                        }--%>
+<%--                    %>--%>
+<%--                </ul>--%>
+            </div>
+
+            <div class="notes">
+                <h3>Notes: </h3>
+<%--                <ul>--%>
+<%--                    <%--%>
+<%--                        for (Message note : notes) {--%>
+<%--                    %>--%>
+<%--                    <li>--%>
+<%--                        <p><strong>From:</strong> <%= note.getSender() %></p>--%>
+<%--                        <p><strong>Sent at:</strong> <%= note.getSentTime() %></p>--%>
+<%--                        <p><strong>Message:</strong> <%= note.getText() %></p>--%>
+<%--                    </li>--%>
+<%--                    <%--%>
+<%--                        }--%>
+<%--                    %>--%>
+                </ul>
+            </div>
+
+            <div class="chat">
+                <button id="chat-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M160 368c26.5 0 48 21.5 48 48v16l72.5-54.4c8.3-6.2 18.4-9.6 28.8-9.6H448c8.8 0 16-7.2 16-16V64c0-8.8-7.2-16-16-16H64c-8.8 0-16 7.2-16 16V352c0 8.8 7.2 16 16 16h96zm48 124l-.2 .2-5.1 3.8-17.1 12.8c-4.8 3.6-11.3 4.2-16.8 1.5s-8.8-8.2-8.8-14.3V474.7v-6.4V468v-4V416H112 64c-35.3 0-64-28.7-64-64V64C0 28.7 28.7 0 64 0H448c35.3 0 64 28.7 64 64V352c0 35.3-28.7 64-64 64H309.3L208 492z"/></svg>
+                    Compose note
+                </button>
+                <form class="chat-form">
+                    <div class="remove-button-parent">
+                        <button class="remove-btn">&#10006;</button>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient">To:</label>
+                        <input type="text" id="recipient" name="recipient" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message:</label>
+                        <textarea id="message" name="message" rows="5" cols="40" required></textarea>
+                    </div>
+                    <button class="send-btn" type="submit">Send</button>
+                </form>
+            </div>
+        </aside>
     </div>
-
-    <section class="announcements">
-    </section>
-
-    <section class="pop-quizes">
-    </section>
-
-    <section class="new-quizes">
-    </section>
-
-    <!-- Should be list of activities about users recently taken quizes -->
-    <section class="rec-quizes-act">
-    </section>
-
-    <!-- Should be list of activities about quizes which this users has created -->
-    <section class="created-quizes-act">
-    </section>
-
-    <section class="achievements">
-    </section>
-
-    <!-- Should be list of friends recent activities i.e. taken quizes,
-     achievemetns, etc. also here should be links to friends profiles and quizes
-     -->
-    <section class="friends-act">
-    </section>
-</main>
-<aside>
-    <%--        <%--%>
-    <%--            MessageDao messageDao = (MessageDao) request.getServletContext().getAttribute("messages");--%>
-    <%--            List<Meesage> messages = messageDao.getMessages(user.getId());--%>
-    <%--            List<Message> requests = messages.stream().filter()--%>
-    <%--        %>--%>
-    <div class="requests">
-
-    </div>
-
-    <div class="challenges">
-
-    </div>
-
-    <div class="notes">
-    </div>
-</aside>
+<script src="js/friends.js"></script>
 <script src="js/search.js"></script>
+<script src="js/message.js"></script>
 </body>
 </html>
