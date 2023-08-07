@@ -5,17 +5,21 @@ DROP TABLE IF EXISTS friends;
 
 -- Create Friends Table. Table has 2 columns - first one stores user's id
 -- second one - another user's id which is friend of this user
-CREATE TABLE friends
+CREATE TABLE IF NOT EXISTS friends
 (
     user_id  INT,
-    friend_id INT
+    friend_id INT,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (friend_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 -- Create Friends Requests Table. This is similar to the above table
-CREATE TABLE friends_reqs
+CREATE TABLE IF NOT EXISTS friends_reqs
 (
     user_id  INT,
-    friend_id INT
+    friend_id INT,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (friend_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 -- Create the users table. Table has 5 columns, user_id is primary
