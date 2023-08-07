@@ -1,20 +1,49 @@
 package models;
 
-import java.util.ArrayList;
 
-public class Challenge implements Message {
-    @Override
-    public String getMessage(int messageId) {
-        return null;
+public class Challenge {
+    private int challengeId;
+    private String fromUsername;
+    private String toUsername;
+    private int quizId;
+
+
+    public Challenge(int challengeId, String fromUsername, String toUsername, int quizId) {
+        this.challengeId = challengeId;
+        this.fromUsername = fromUsername;
+        this.toUsername = toUsername;
+        this.quizId = quizId;
+    }
+
+    public Challenge(String fromUsername, String toUsername, int quizId) {
+        this.fromUsername = fromUsername;
+        this.toUsername = toUsername;
+        this.quizId = quizId;
+    }
+
+    public String getFromUsername() {
+        return this.fromUsername;
+    }
+
+    public String getToUsername() {
+        return this.toUsername;
+    }
+
+    public int getQuizId() {
+        return this.quizId;
+    }
+
+    public int getChallengeId() {
+        return this.challengeId;
     }
 
     @Override
-    public void deleteMessage(int messageId) {
-
-    }
-
-    @Override
-    public ArrayList<String> getMessages(String username) {
-        return null;
+    public String toString() {
+        return "Challenge{" +
+                "challengeId=" + challengeId +
+                ", fromUsername='" + fromUsername + '\'' +
+                ", toUsername='" + toUsername + '\'' +
+                ", quizId=" + quizId +
+                '}';
     }
 }
