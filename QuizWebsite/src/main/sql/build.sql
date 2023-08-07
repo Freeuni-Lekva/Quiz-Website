@@ -17,7 +17,7 @@ CREATE TABLE messages
     from_username VARCHAR(100),
     to_username   VARCHAR(100),
     message       VARCHAR(1000) not null,
-    create_date   timestamp     not null,
+    sent_date     timestamp     not null,
     foreign key (from_username) references users (username) on delete cascade,
     foreign key (to_username) references users (username) on delete cascade
 );
