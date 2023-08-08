@@ -22,6 +22,25 @@ CREATE TABLE messages
     foreign key (to_username) references users (username) on delete cascade
 );
 
+CREATE TABLE challenges
+(
+    id            int primary key auto_increment,
+    from_username VARCHAR(100),
+    to_username   VARCHAR(100),
+    quiz_id       VARCHAR(1000) not null,
+    foreign key (from_username) references users (username) on delete cascade,
+    foreign key (to_username) references users (username) on delete cascade
+);
+
+CREATE TABLE friend_requests
+(
+    id            int primary key auto_increment,
+    from_username VARCHAR(100),
+    to_username   VARCHAR(100),
+    foreign key (from_username) references users (username) on delete cascade,
+    foreign key (to_username) references users (username) on delete cascade
+);
+
 -- Create the users table. Table has 5 columns, user_id is primary
 -- and auto incremented, username should be unique for each user
 CREATE TABLE IF NOT EXISTS users
