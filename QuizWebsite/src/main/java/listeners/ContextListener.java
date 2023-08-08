@@ -24,10 +24,8 @@ public class ContextListener implements ServletContextListener {
         }
         UsersDao users = new UsersDao(conn);
         FriendsDao friends = new FriendsDao(conn, "friends");
-        FriendsDao friendReqs = new FriendsDao(conn, "friends_reqs");
         servletContextEvent.getServletContext().setAttribute("users", users);
         servletContextEvent.getServletContext().setAttribute("friends", friends);
-        servletContextEvent.getServletContext().setAttribute("friends_reqs", friendReqs);
     }
 
     @Override
