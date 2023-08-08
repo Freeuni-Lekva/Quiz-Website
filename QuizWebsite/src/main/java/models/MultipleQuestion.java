@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,6 +14,7 @@ public class MultipleQuestion extends Question {
     private String answer;
     public MultipleQuestion(String question) {
         super(question);
+        choices = new ArrayList<>();
     }
 
     /**
