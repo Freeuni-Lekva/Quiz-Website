@@ -1,8 +1,6 @@
 package listeners;
 
-import dao.ConnectionManager;
-import dao.FriendsDao;
-import dao.UsersDao;
+import dao.*;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -24,8 +22,14 @@ public class ContextListener implements ServletContextListener {
         }
         UsersDao users = new UsersDao(conn);
         FriendsDao friends = new FriendsDao(conn, "friends");
+        MessageDao messages = new MessageDao(conn);
+        FriendRequestDao friendRequests = new FriendRequestDao(conn);
+        ChallengeDao challenges = new ChallengeDao(conn);
         servletContextEvent.getServletContext().setAttribute("users", users);
         servletContextEvent.getServletContext().setAttribute("friends", friends);
+        servletContextEvent.getServletContext().setAttribute("messages", messages);
+        servletContextEvent.getServletContext().setAttribute("friend_requests", friendRequests);
+        servletContextEvent.getServletContext().setAttribute("challenges", challenges);
     }
 
     @Override

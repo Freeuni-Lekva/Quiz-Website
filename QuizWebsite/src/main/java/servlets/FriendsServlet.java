@@ -47,7 +47,7 @@ public class FriendsServlet extends HttpServlet {
         // Retrieve necessary DAO objects from the servlet context
         UsersDao usersDao = (UsersDao) httpServletRequest.getServletContext().getAttribute("users");
         FriendsDao friendsDao =  (FriendsDao) httpServletRequest.getServletContext().getAttribute("friends");
-        FriendRequestDao friendsReqsDao =  (FriendRequestDao) httpServletRequest.getServletContext().getAttribute("friends_reqs");
+        FriendRequestDao friendsReqsDao =  (FriendRequestDao) httpServletRequest.getServletContext().getAttribute("friend_requests");
 
         // Read JSON data from the request
         BufferedReader reader = new BufferedReader(new InputStreamReader(httpServletRequest.getInputStream()));

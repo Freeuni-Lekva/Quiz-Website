@@ -1,11 +1,13 @@
 <%@ page import="models.User" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.lang.reflect.Array" %>
-<%@ page import="dao.FriendsDao" %>
 <%@ page import="java.util.List" %>
-<%@ page import="dao.UsersDao" %>
 <%@ page import="java.util.stream.Collectors" %>
-<%@ page import="java.text.SimpleDateFormat" %><%--
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="dao.*" %>
+<%@ page import="models.FriendRequest" %>
+<%@ page import="models.Message" %>
+<%@ page import="models.Challenge" %><%--
   Created by IntelliJ IDEA.
   User: nika
   Date: 30.07.23
@@ -84,7 +86,7 @@
         </main>
         <aside>
             <%
-                FriendRequestDao friendsReqs = (FriendRequestDao) request.getServletContext().getAttribute("friends_reqs");
+                FriendRequestDao friendsReqs = (FriendRequestDao) request.getServletContext().getAttribute("friend_requests");
                 MessageDao messageDao = (MessageDao) request.getServletContext().getAttribute("messages");
                 ChallengeDao challengeDao = (ChallengeDao) request.getServletContext().getAttribute("challenges");
                 List<FriendRequest> reqsList = friendsReqs.getFriendRequests(user.getUsername());

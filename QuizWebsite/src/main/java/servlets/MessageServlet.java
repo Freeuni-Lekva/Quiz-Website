@@ -45,7 +45,7 @@ public class MessageServlet extends HttpServlet {
         String from = (String) jsonData.get("from");
         String to = (String) jsonData.get("to");
         String message = (String) jsonData.get("message");
-        Message messageObj = new Message(from, to, message, new Timestamp(System.currentTimeMillis());
+        Message messageObj = new Message(from, to, message, new Timestamp(System.currentTimeMillis()));
         messageDao.addMessage(messageObj);
     }
 }

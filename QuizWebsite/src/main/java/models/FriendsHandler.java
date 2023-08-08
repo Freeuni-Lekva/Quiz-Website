@@ -1,5 +1,6 @@
 package models;
 
+import dao.FriendRequestDao;
 import dao.FriendsDao;
 import dao.UsersDao;
 
@@ -11,7 +12,7 @@ public class FriendsHandler {
 
     private UsersDao users;
     private FriendsDao friends;
-    private FriendsDao friendReqs;
+    private FriendRequestDao friendReqs;
     private String fromUsername;
     private String toUsername;
 
@@ -25,7 +26,7 @@ public class FriendsHandler {
      */
     public FriendsHandler(String fromUsername, String toUsername,
                           UsersDao users, FriendsDao friends,
-                          FriendsDao friendsReqs) {
+                          FriendRequestDao friendsReqs) {
         this.users = users;
         this.friends = friends;
         this.friendReqs = friendsReqs;
@@ -43,7 +44,7 @@ public class FriendsHandler {
     public void handle(boolean toAdd) {
         User fromUser = users.getUser(fromUsername);
         User toUser = users.getUser(toUsername);
-        friendReqs.removeFriend(deleteFriendRequest(new FriendRequest(fromUsername, toUsername)));
+        friendReqs.deleteFriendRequest(new FriendRequest(fromUsername, toUsername));
         if (toAdd) {
             friends.addFriend(fromUser.getId(), toUser.getId());
         } else {
