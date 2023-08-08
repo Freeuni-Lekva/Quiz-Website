@@ -20,11 +20,10 @@ removeBtn.addEventListener('click', (e) => {
 
 sendBtn.addEventListener('click', (e) => {
     e.preventDefault();
-   const message = messageArea.textContent;
-   const recipient = recipientInput.textContent;
+   const message = messageArea.value;
+   const recipient = recipientInput.value;
    messageArea.value = "";
    recipientInput.value = "";
-   console.log("to " + recipient + " message: " + message);
    sendMessage(document.getElementById("username").innerText.trim(),
        recipient,
        message);
