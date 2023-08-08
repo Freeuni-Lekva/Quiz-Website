@@ -3,14 +3,14 @@ const rejectButtons = document.querySelectorAll('.rej-btn');
 
 function handleFriend(event, toAdd) {
     const parentLi = event.target.closest('li');
-    const from = parentLi.id.split('-')[1];
-    const to = document.getElementById("username").innerText.trim();
+    const fromUsername = parentLi.id.split('-')[1];
+    const toUsername = document.getElementById("username").innerText.trim();
     const baseUrl = "/friends/FriendsServlet";
     const params = `?toAdd=${toAdd}`;
     const url = baseUrl + params;
     const data = {
-        from: from,
-        to: to,
+        from: fromUsername,
+        to: toUsername,
     };
 
     const options = {
