@@ -4,7 +4,8 @@
 <%@ page import="dao.FriendsDao" %>
 <%@ page import="java.util.List" %>
 <%@ page import="dao.UsersDao" %>
-<%@ page import="java.util.stream.Collectors" %><%--
+<%@ page import="java.util.stream.Collectors" %>
+<%@ page import="java.text.SimpleDateFormat" %><%--
   Created by IntelliJ IDEA.
   User: nika
   Date: 30.07.23
@@ -83,24 +84,21 @@
         </main>
         <aside>
             <%
-                //        MessageDao messageDao = (MessageDao) request.getServletContext().getAttribute("messages");
-                //        List<RequestMessage> friendReqs = messageDao.getRequests(user.getUsername());
-                //        List<ChallengeMessage> challenges = messageDao.getChallenges(user.getUsername());
-                //        List<NoteMessage> notes = messageDao.getNotes(user.getUsername());
-                FriendsDao friendsReqs = (FriendsDao) request.getServletContext().getAttribute("friends_reqs");
-                UsersDao usersDao = (UsersDao) request.getServletContext().getAttribute("users");
-                List<Integer> reqsList = friendsReqs.getFriends(user.getId());
-//                MessageDao messageDao = (MessageDao) request.getServletContext().getAttribute("messages");
-//                List<Message> notes = messageDao.getMessages(user.getUsername());
+                FriendRequestDao friendsReqs = (FriendRequestDao) request.getServletContext().getAttribute("friends_reqs");
+                MessageDao messageDao = (MessageDao) request.getServletContext().getAttribute("messages");
+                ChallengeDao challengeDao = (ChallengeDao) request.getServletContext().getAttribute("challenges");
+                List<FriendRequest> reqsList = friendsReqs.getFriendRequests(user.getUsername());
+                List<Message> messages = messageDao.getMessagesOfUser(user.getUsername());
+                List<Challenge> challenges = challengeDao.getChallenges(user.getUsername());
             %>
             <div class="requests">
                 <h3>Friend Requests: </h3>
                 <ul>
                     <%
-                        for (Integer id : reqsList) {
+                        for (FriendRequest req : reqsList) {
                     %>
-                    <li id="req-<%= usersDao.getUser(id).getUsername() %>">
-                        <p><%= usersDao.getUser(id).getUsername() %></p>
+                    <li id="req-<%= req.getFromUsername() %>">
+                        <p><%= req.getFromUsername() %></p>
                         <div>
                             <button class="acc-btn">Accept</button>
                             <button class="rej-btn">Reject</button>
@@ -113,33 +111,40 @@
             </div>
             <div class="challenges">
                 <h3>Quiz Challenges: </h3>
-<%--                <ul>--%>
-<%--                    <%--%>
-<%--                        for (String quizurl : quizUrls) {--%>
-<%--                    %>--%>
-<%--                    <li>--%>
-<%--                        <a href="<%= quizurl %>">Take a Quiz <%= quizurl %></a>--%>
-<%--                    </li>--%>
-<%--                    <%--%>
-<%--                        }--%>
-<%--                    %>--%>
-<%--                </ul>--%>
+                <ul>
+                    <%
+                        for (Challenge challenge : challenges) {
+                    %>
+                    <li>
+                        <p>
+                            <a href="/quiz?id=<%= challenge.getQuizId() %>">
+                                <%= challenge.getFromUsername() %> has Challenged you, click here to start
+                            </a>
+                        </p>
+                    </li>
+                    <%
+                        }
+                    %>
+                </ul>
             </div>
 
             <div class="notes">
                 <h3>Notes: </h3>
-<%--                <ul>--%>
-<%--                    <%--%>
-<%--                        for (Message note : notes) {--%>
-<%--                    %>--%>
-<%--                    <li>--%>
-<%--                        <p><strong>From:</strong> <%= note.getSender() %></p>--%>
-<%--                        <p><strong>Sent at:</strong> <%= note.getSentTime() %></p>--%>
-<%--                        <p><strong>Message:</strong> <%= note.getText() %></p>--%>
-<%--                    </li>--%>
-<%--                    <%--%>
-<%--                        }--%>
-<%--                    %>--%>
+                <ul>
+                    <%
+                        for (Message message : messages) {
+                    %>
+                    <li>
+                        <p><strong>From:</strong> <%= message.getFromUsername() %></p>
+                        <p><strong>Message:</strong> <%= message.getMessage() %></p>
+                        <p><strong>Sent at:</strong>
+                            <%=
+                            new SimpleDateFormat("HH:mm dd-MM-yyyy").format(message.getSentDate())
+                            %></p>
+                    </li>
+                    <%
+                        }
+                    %>
                 </ul>
             </div>
 
