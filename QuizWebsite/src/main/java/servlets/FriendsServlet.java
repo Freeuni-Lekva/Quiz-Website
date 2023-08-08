@@ -2,8 +2,10 @@ package servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.FriendsDao;
+import dao.FriendRequestDao;
 import dao.UsersDao;
 import models.FriendsHandler;
+import models.FriendRequest;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -45,7 +47,7 @@ public class FriendsServlet extends HttpServlet {
         // Retrieve necessary DAO objects from the servlet context
         UsersDao usersDao = (UsersDao) httpServletRequest.getServletContext().getAttribute("users");
         FriendsDao friendsDao =  (FriendsDao) httpServletRequest.getServletContext().getAttribute("friends");
-        FriendsDao friendsReqsDao =  (FriendsDao) httpServletRequest.getServletContext().getAttribute("friends_reqs");
+        FriendRequestDao friendsReqsDao =  (FriendRequestDao) httpServletRequest.getServletContext().getAttribute("friends_reqs");
 
         // Read JSON data from the request
         BufferedReader reader = new BufferedReader(new InputStreamReader(httpServletRequest.getInputStream()));

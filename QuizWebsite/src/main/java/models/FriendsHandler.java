@@ -43,7 +43,7 @@ public class FriendsHandler {
     public void handle(boolean toAdd) {
         User fromUser = users.getUser(fromUsername);
         User toUser = users.getUser(toUsername);
-        friendReqs.removeFriend(fromUser.getId(), toUser.getId());
+        friendReqs.removeFriend(deleteFriendRequest(new FriendRequest(fromUsername, toUsername)));
         if (toAdd) {
             friends.addFriend(fromUser.getId(), toUser.getId());
         } else {

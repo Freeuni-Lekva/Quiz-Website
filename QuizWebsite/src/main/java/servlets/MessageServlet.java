@@ -2,6 +2,7 @@ package servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.MessageDao;
+import models.Message;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -38,19 +39,13 @@ public class MessageServlet extends HttpServlet {
         }
         reader.close();
 
-        // Convert JSON data to a Map object using Jackson's ObjectMapper
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> jsonData = mapper.readValue(jsonBuilder.toString(), Map.class);
 
-        // Extract relevant fields from the JSON data
         String from = (String) jsonData.get("from");
         String to = (String) jsonData.get("to");
         String message = (String) jsonData.get("message");
-
-        // Create a Timestamp object representing the current time
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-
-        // Add the message to the database using the MessageDao class
-        messageDao.addMessage(new Message(from, to, message, timestamp));
+        Message messageObj = new Message(from, to, message, new Timestamp(System.currentTimeMillis());
+        messageDao.addMessage(messageObj);
     }
 }
