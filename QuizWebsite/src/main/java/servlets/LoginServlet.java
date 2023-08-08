@@ -38,17 +38,13 @@ public class LoginServlet extends HttpServlet {
         ServletContext servletContext = httpServletRequest.getServletContext();
         UsersDao userInfo = (UsersDao) servletContext.getAttribute("users");
         LoginChecker check = new LoginChecker(username, password, userInfo);
-        try {
-            if (check.isCorrect()) {
-                RequestDispatcher dispatcher = httpServletRequest.getRequestDispatcher("/homepage.jsp");
-                HttpSession session = httpServletRequest.getSession();
-                session.setAttribute("loggedUser", userInfo.getUser(username));
-                dispatcher.forward(httpServletRequest, httpServletResponse);
-            } else {
-                httpServletRequest.getRequestDispatcher("login/loginFailed.jsp").forward(httpServletRequest, httpServletResponse);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        if (check.isCorrect()) {
+            RequestDispatcher dispatcher = httpServletRequest.getRequestDispatcher("/homepage.jsp");
+            HttpSession session = httpServletRequest.getSession();
+            session.setAttribute("loggedUser", userInfo.getUser(username));
+            dispatcher.forward(httpServletRequest, httpServletResponse);
+        } else {
+            httpServletRequest.getRequestDispatcher("login/loginFailed.jsp").forward(httpServletRequest, httpServletResponse);
         }
     }
 }

@@ -27,7 +27,7 @@ public class LoginChecker {
      Checks if user input(username, password) is correct
      then returns true, otherwise returns false
      */
-    public boolean isCorrect() throws SQLException {
+    public boolean isCorrect() {
         User userAccount = userInfo.getUser(username);
         if (userAccount == null) {
             return false;

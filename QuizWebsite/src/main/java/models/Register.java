@@ -27,10 +27,11 @@ public class Register {
      * @param user the Account object representing the user account to be registered.
      * @return true if the account was successfully registered, false otherwise.
      */
-    public boolean registerAccount(User user) throws SQLException {
+    public boolean registerAccount(User user) {
         if (isValid(user)) {
             String salt = SaltGenerator.generateSalt();
             String saltedPassword = user.getPassword() + salt;
+            user.setSalt(salt);
             PasswordGenerator generator = new PasswordGenerator(saltedPassword);
             String hashedPassword = generator.getHashedPassword();
             user.setHashedPassword(hashedPassword);
@@ -48,7 +49,7 @@ public class Register {
      * @param account the Account object to be validated.
      * @return true if the account is valid, false otherwise.
      */
-    private boolean isValid(User account) throws SQLException {
+    private boolean isValid(User account) {
         return account.getUserType() != null
                 && !account.getUserType().isEmpty()
                 && !account.getUsername().isEmpty()
