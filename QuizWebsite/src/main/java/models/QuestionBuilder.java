@@ -31,16 +31,16 @@ public class QuestionBuilder {
         switch (questionType) {
             case QuestionType.PICTURE_QUESTION:
                 question = new PictureQuestion(questionContent, pictureUrl, questionType);
-                setRests(question, quizId, answers);
+                setRests(question, questionId, quizId, answers);
                 break;
             case QuestionType.QUESTION_RESPONSE:
             case QuestionType.FILL_THE_BLANK:
                 question = new SingleQuestion(questionContent, questionType);
-                setRests(question, quizId, answers);
+                setRests(question, questionId, quizId, answers);
                 break;
             case QuestionType.MULTIPLE_CHOICE:
                 question = new MultipleQuestion(questionContent, questionType);
-                setRests(question, quizId, answers);
+                setRests(question, questionId, quizId, answers);
                 break;
             default:
                 question = null;
@@ -56,7 +56,8 @@ public class QuestionBuilder {
      * @param quizId The unique identifier of the quiz this question belongs to.
      * @param answers The list of answers associated with the question.
      */
-    private static void setRests(Question question, int quizId, List<String> answers) {
+    private static void setRests(Question question, int questionId, int quizId, List<String> answers) {
+        question.setQuestionId(questionId);
         question.setQuizId(quizId);
         question.addAnswer(answers.toArray(new String[answers.size()]));
     }

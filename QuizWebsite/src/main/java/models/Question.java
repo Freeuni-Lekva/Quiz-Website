@@ -10,6 +10,8 @@ public abstract class Question {
 
     private String question;
     private String type;
+    private int quizId;
+    private int questionId;
 
     /**
      * Constructor for the Question class.
@@ -53,5 +55,18 @@ public abstract class Question {
      */
     public String getType() {
         return type;
+    }
+
+    public void setQuizId(int quizId) {
+        this.quizId = quizId;
+    }
+    public int getQuizId() {
+        return quizId;
+    }
+    public void setQuestionId(int questionId) {
+        this.questionId = questionId;
+    }
+    public int getQuestionId() {
+        return questionId;
     }
 }
