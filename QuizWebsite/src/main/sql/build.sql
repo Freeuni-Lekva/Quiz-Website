@@ -44,3 +44,9 @@ CREATE TABLE IF NOT EXISTS questionResponse (
     question_content VARCHAR(5000),
     quiz_id INT REFERENCES quizzes(quiz_id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS fillInTheBlank (
+    question_id INT AUTO_INCREMENT PRIMARY KEY,
+    question_content VARCHAR(5000),
+    quiz_id INT REFERENCES quizzes(quiz_id) ON DELETE CASCADE
+);
