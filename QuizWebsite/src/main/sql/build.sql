@@ -78,3 +78,10 @@ CREATE TABLE IF NOT EXISTS questions (
     picture_url VARCHAR(200),
     quiz_id INT REFERENCES quizzes (quiz_id) ON DELETE CASCADE
 );
+
+-- Creates the answers table
+CREATE TABLE IF NOT EXISTS answers (
+     answer_id INT AUTO_INCREMENT PRIMARY KEY,
+     answer VARCHAR(100),
+     question_id INT REFERENCES questions (question_id) ON DELETE CASCADE
+);
