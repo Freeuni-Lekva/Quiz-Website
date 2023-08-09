@@ -57,3 +57,10 @@ CREATE TABLE IF NOT EXISTS multipleChoice (
     answers_quantity INT,
     quiz_id INT REFERENCES quizzes(quiz_id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS pictureResponse (
+    question_id INT AUTO_INCREMENT PRIMARY KEY,
+    question_content VARCHAR(5000),
+    picture_url VARCHAR(200),
+    quiz_id INT REFERENCES quizzes(quiz_id) ON DELETE CASCADE
+);
