@@ -1,17 +1,35 @@
 CREATE SCHEMA IF NOT EXISTS QuizWebsite;
 USE QuizWebsite;
 
+-- Create the users table. Table has 5 columns, user_id is primary
+-- and auto incremented, username should be unique for each user
+CREATE TABLE IF NOT EXISTS users
+(
+    user_id   INT AUTO_INCREMENT PRIMARY KEY,
+    username  VARCHAR(100) UNIQUE,
+    password  VARCHAR(100),
+    user_type VARCHAR(100),
+    salt      VARCHAR(100)
+    );
+
+ALTER TABLE users
+    ADD CONSTRAINT unique_username UNIQUE (username);
+
 DROP TABLE IF EXISTS friends;
 
 -- Create Friends Table. Table has 2 columns - first one stores user's id
 -- second one - another user's id which is friend of this user
-CREATE TABLE friends
+CREATE TABLE IF NOT EXISTS friends
 (
-    user_id   INT,
-    friend_id INT
+    user_id  INT,
+    friend_id INT,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (friend_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
-CREATE TABLE messages
+DROP TABLE IF EXISTS messages;
+
+CREATE TABLE IF NOT EXISTS messages
 (
     id            int primary key auto_increment,
     from_username VARCHAR(100),
@@ -22,7 +40,9 @@ CREATE TABLE messages
     foreign key (to_username) references users (username) on delete cascade
 );
 
-CREATE TABLE challenges
+DROP TABLE IF EXISTS challenges;
+
+CREATE TABLE IF NOT EXISTS challenges
 (
     id            int primary key auto_increment,
     from_username VARCHAR(100),
@@ -32,7 +52,9 @@ CREATE TABLE challenges
     foreign key (to_username) references users (username) on delete cascade
 );
 
-CREATE TABLE friend_requests
+DROP TABLE IF EXISTS friend_requests;
+
+CREATE TABLE IF NOT EXISTS friend_requests
 (
     id            int primary key auto_increment,
     from_username VARCHAR(100),
@@ -40,17 +62,3 @@ CREATE TABLE friend_requests
     foreign key (from_username) references users (username) on delete cascade,
     foreign key (to_username) references users (username) on delete cascade
 );
-
--- Create the users table. Table has 5 columns, user_id is primary
--- and auto incremented, username should be unique for each user
-CREATE TABLE IF NOT EXISTS users
-(
-    user_id   INT AUTO_INCREMENT PRIMARY KEY,
-    username  VARCHAR(100) UNIQUE,
-    password  VARCHAR(100),
-    user_type VARCHAR(100),
-    salt      VARCHAR(100)
-);
-
-ALTER TABLE users
-    ADD CONSTRAINT unique_username UNIQUE (username);
