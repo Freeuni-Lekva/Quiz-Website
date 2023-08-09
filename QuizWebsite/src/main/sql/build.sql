@@ -39,12 +39,8 @@ CREATE TABLE IF NOT EXISTS quizzes (
     author_id int references users(user_id)
 );
 
--- Creates questions table. Contains information about questions:
--- type, text. There are question_id as primary key and quiz_id
--- references quiz_id column of quizzes table
-CREATE TABLE IF NOT EXISTS questions (
+CREATE TABLE IF NOT EXISTS questionResponse (
     question_id INT AUTO_INCREMENT PRIMARY KEY,
-    question_type VARCHAR(50),
     question_content VARCHAR(5000),
-    quiz_id INT REFERENCES quizzes(quiz_id)
+    quiz_id INT REFERENCES quizzes(quiz_id) ON DELETE CASCADE
 );
