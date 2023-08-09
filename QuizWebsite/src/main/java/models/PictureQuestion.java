@@ -14,8 +14,8 @@ public class PictureQuestion extends SingleQuestion {
      * @param question The text of the picture question.
      * @param imgUrl   The URL of the image associated with the question.
      */
-    public PictureQuestion(String question, String imgUrl) {
-        super(question); // Call the constructor of the superclass (SingleQuestion) to set the question text
+    public PictureQuestion(String question, String imgUrl, String type) {
+        super(question, type); // Call the constructor of the superclass (SingleQuestion) to set the question text
         this.imgUrl = imgUrl; // Set the URL of the image
     }
 
@@ -23,8 +23,8 @@ public class PictureQuestion extends SingleQuestion {
      * Constructor for the PictureQuestion class with a default question text "Name this image's content".
      * @param imgUrl The URL of the image associated with the question.
      */
-    public PictureQuestion(String imgUrl) {
-        super("Name this image's content");
+    public PictureQuestion(String imgUrl, String type) {
+        super("Name this image's content", type);
         this.imgUrl = imgUrl;
     }
 

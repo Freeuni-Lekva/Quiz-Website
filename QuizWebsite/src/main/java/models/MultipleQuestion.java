@@ -12,8 +12,8 @@ import java.util.List;
 public class MultipleQuestion extends Question {
     private List<String> choices;
     private String answer;
-    public MultipleQuestion(String question) {
-        super(question);
+    public MultipleQuestion(String question, String type) {
+        super(question, type);
         choices = new ArrayList<>();
     }
 
@@ -45,5 +45,9 @@ public class MultipleQuestion extends Question {
         for (String choice : choices) {
             this.choices.add(choice);
         }
+    }
+
+    public List<String> getChoices() {
+        return choices;
     }
 }

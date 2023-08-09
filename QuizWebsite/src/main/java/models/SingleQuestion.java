@@ -15,8 +15,8 @@ public class SingleQuestion extends Question {
      *
      * @param question The question text to be displayed.
      */
-    public SingleQuestion(String question) {
-        super(question);
+    public SingleQuestion(String question, String type) {
+        super(question, type);
         answers = new HashSet<>();
     }
 

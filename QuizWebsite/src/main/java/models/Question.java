@@ -9,14 +9,16 @@ package models;
 public abstract class Question {
 
     private String question;
+    private String type;
 
     /**
      * Constructor for the Question class.
      *
      * @param question The text of the question.
      */
-    public Question(String question) {
+    public Question(String question, String type) {
         this.question = question;
+        this.type = type;
     }
 
     /**
@@ -43,5 +45,13 @@ public abstract class Question {
      */
     public String getQuestion() {
         return question;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getType() {
+        return type;
     }
 }
