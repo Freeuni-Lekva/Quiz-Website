@@ -57,9 +57,10 @@ public class HistoryDao {
             statement.setInt(2, history.getQuizId());
             statement.setDouble(3, history.getGrade());
             statement.setTime(4, history.getDuration());
+            statement.executeUpdate();
             ResultSet set = statement.getGeneratedKeys();
             set.next();
-            history.setHistoryId(set.getInt("history_id"));
+            history.setHistoryId(set.getInt(1));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
