@@ -93,3 +93,13 @@ CREATE TABLE IF NOT EXISTS answers (
      answer VARCHAR(100),
      question_id INT REFERENCES questions (question_id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS history (
+    history_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    quiz_id INT,
+    grade DECIMAL(5, 2),
+    duration TIME,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (quiz_id) REFERENCES quizzes(quiz_id) ON DELETE CASCADE,
+);
