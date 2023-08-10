@@ -89,9 +89,9 @@ CREATE TABLE IF NOT EXISTS questions (
 
 -- Creates the answers table
 CREATE TABLE IF NOT EXISTS answers (
-     answer_id INT AUTO_INCREMENT PRIMARY KEY,
-     answer VARCHAR(100),
-     question_id INT REFERENCES questions (question_id) ON DELETE CASCADE
+    answer_id INT AUTO_INCREMENT PRIMARY KEY,
+    answer VARCHAR(100),
+    question_id INT REFERENCES questions (question_id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS history (
@@ -101,5 +101,6 @@ CREATE TABLE IF NOT EXISTS history (
     grade DECIMAL(5, 2),
     duration TIME,
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
-    FOREIGN KEY (quiz_id) REFERENCES quizzes(quiz_id) ON DELETE CASCADE,
+    FOREIGN KEY (quiz_id) REFERENCES quizzes(quiz_id) ON DELETE CASCADE
 );
+
