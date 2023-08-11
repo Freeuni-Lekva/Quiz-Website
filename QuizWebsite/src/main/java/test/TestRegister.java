@@ -16,7 +16,7 @@ public class TestRegister extends TestCase {
 
         @Override
         public User getUser(String userName) {
-            return new User(userName, "123123", "user");
+            return null;
         }
     }
 

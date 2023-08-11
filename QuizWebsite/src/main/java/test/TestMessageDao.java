@@ -20,8 +20,8 @@ public class TestMessageDao extends TestCase {
     private void initDB() {
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setUrl("jdbc:mysql://localhost:3306/TestQuizWebsite");
-        dataSource.setUsername("nika13");
-        dataSource.setPassword("Nikasql123!.");
+        dataSource.setUsername("root");
+        dataSource.setPassword("root");
         try {
             Connection connection = dataSource.getConnection();
             String dropTableSql = "DROP TABLE IF EXISTS messages";
