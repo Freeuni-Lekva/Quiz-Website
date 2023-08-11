@@ -46,9 +46,7 @@ public class UsersDao {
             rs.next();
             int id = rs.getInt(1);
             user.setId(id);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (SQLException e) {}
     }
     /**
      * Retrieves a user from the database based on the given username.
@@ -65,10 +63,8 @@ public class UsersDao {
                 return new User(rs.getInt("user_id"), rs.getString("username"), rs.getString("password"),
                         rs.getString("user_type"), rs.getString("salt"));
             }
-            return null;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (SQLException e) {}
+        return null;
     }
     /**
      * Retrieves a user from the database based on the given user ID.
@@ -85,10 +81,8 @@ public class UsersDao {
                 return new User(rs.getInt("user_id"), rs.getString("username"), rs.getString("password"),
                         rs.getString("user_type"), rs.getString("salt"));
             }
-            return null;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (SQLException e) {}
+        return  null;
     }
     /**
      * Searches for users with usernames that match the given prefix.
@@ -112,9 +106,7 @@ public class UsersDao {
                         rs.getString("user_type"),
                         rs.getString("salt")));
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (SQLException e) {}
         return userList;
     }
     /**
@@ -128,8 +120,6 @@ public class UsersDao {
             statement = conn.prepareStatement("DELETE FROM users WHERE username = ?");
             statement.setString(1, username);
             statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (SQLException e) {}
     }
 }

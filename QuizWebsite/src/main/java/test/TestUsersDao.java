@@ -73,5 +73,7 @@ public class TestUsersDao extends TestCase {
         usersDao.removeUser("giorgi");
         assertEquals(0, usersDao.searchPrefix("g").size());
         assertEquals(0, usersDao.searchPrefix("").size());
+        assertNull(usersDao.getUser("asdadsas"));
+        assertNull(usersDao.getUser(-1));
     }
 }
