@@ -4,6 +4,7 @@ import dao.HistoryDao;
 import junit.framework.TestCase;
 import models.History;
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,15 +16,14 @@ import java.util.List;
 
 public class TestHistoryDao extends TestCase {
     private HistoryDao historyDao;
-    @BeforeEach
+
     public void initDB() {
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setUrl("jdbc:mysql://localhost:3306/TestQuizWebsite");
-        dataSource.setUsername("nika13");
-        dataSource.setPassword("Nikasql123!.");
+        dataSource.setUsername("root");
+        dataSource.setPassword("root");
         try {
             Connection connection = dataSource.getConnection();
-
             String dropTableSql = "DROP TABLE IF EXISTS history";
             String createTableSql = "CREATE TABLE IF NOT EXISTS history (\n" +
                     "    history_id INT AUTO_INCREMENT PRIMARY KEY,\n" +
@@ -52,5 +52,20 @@ public class TestHistoryDao extends TestCase {
         assertEquals(histories.get(0).getDuration(), history.getDuration());
         history.setHistoryId(1);
         assertEquals(histories.get(0).getHistoryId(), history.getHistoryId());
+    }
+
+    public void testAddMore() {
+        initDB();
+        History history = new History(1, 2, 24, new Time(200000));
+        historyDao.addHistory(history);
+        history = new History(1, 2, 58, new Time(130000));
+        historyDao.addHistory(history);
+        history = new History(1, 3, 67, new Time(170000));
+        historyDao.addHistory(history);
+        history = new History(2, 3, 87, new Time(140000));
+        historyDao.addHistory(history);
+        List<History> historyOfOne = historyDao.getHistory(1);
+        assertEquals(3, historyOfOne.size());
+        assertEquals(1, historyDao.getHistory(2).size());
     }
 }
