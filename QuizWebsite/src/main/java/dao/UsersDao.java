@@ -40,18 +40,6 @@ public class UsersDao {
         }
     }
 
-    public String getPassword(String username) {
-        try {
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE username = ?");
-            ps.setString(1, username);
-            ResultSet rs = ps.executeQuery();
-            rs.next();
-            return rs.getString("password");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public User getUser(String username) {
         try {
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE username = ?");
@@ -102,5 +90,16 @@ public class UsersDao {
             throw new RuntimeException(e);
         }
         return userList;
+    }
+
+    public void removeUser(String username) {
+        PreparedStatement statement = null;
+        try {
+            statement = conn.prepareStatement("DELETE FROM users WHERE username = ?");
+            statement.setString(1, username);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
