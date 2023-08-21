@@ -1,6 +1,8 @@
 package models;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Timer;
 
 public class Quiz {
     private final int id;
@@ -12,6 +14,8 @@ public class Quiz {
     private final boolean immediate_feedback;
     private final int author_id;
     private List<Question> questionList;
+    private long startTime;
+    private long endTime;
 
 
     public Quiz(int id, String name, String description, int duration, boolean random_questions,
@@ -24,6 +28,7 @@ public class Quiz {
         this.multiple_pages = multiple_pages;
         this.immediate_feedback = immediate_feedback;
         this.author_id = author_id;
+        questionList = new ArrayList<>();
     }
 
     public List<Question> getQuestions() {
@@ -72,5 +77,17 @@ public class Quiz {
 
     public int getAuthorId() {
         return author_id;
+    }
+
+    public void startQuiz() {
+        startTime = System.currentTimeMillis();
+    }
+
+    public void endQuiz() {
+        endTime = System.currentTimeMillis();
+    }
+
+    public long calculateDuration() {
+        return endTime - startTime;
     }
 }
