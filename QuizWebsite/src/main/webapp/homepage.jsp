@@ -1,13 +1,10 @@
-<%@ page import="models.User" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.lang.reflect.Array" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.stream.Collectors" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="dao.*" %>
-<%@ page import="models.FriendRequest" %>
-<%@ page import="models.Message" %>
-<%@ page import="models.Challenge" %><%--
+<%@ page import="models.*" %><%--
   Created by IntelliJ IDEA.
   User: nika
   Date: 30.07.23
@@ -25,8 +22,8 @@
 <body>
 <%
     User user = (User) request.getSession().getAttribute("loggedUser");
-
-    // Get the current hour of the day
+    HistoryDao historyDao = (HistoryDao) request.getServletContext().getAttribute("history");
+    List<History> historyList = historyDao.getHistory(user.getId());
     java.util.Calendar cal = java.util.Calendar.getInstance();
     int hour = cal.get(java.util.Calendar.HOUR_OF_DAY);
 
@@ -58,31 +55,57 @@
     </header>
     <div class="flex-main">
         <main>
-            <section class="announcements">
-            </section>
+            <article class="announcements">
+            </article>
 
-            <section class="pop-quizes">
-            </section>
+            <article class="pop-quizes">
+            </article>
 
-            <section class="new-quizes">
-            </section>
+            <article class="new-quizes">
+            </article>
 
             <!-- Should be list of activities about users recently taken quizes -->
-            <section class="rec-quizes-act">
-            </section>
+            <artilce class="rec-quizes-act">
+            </artilce>
 
             <!-- Should be list of activities about quizes which this users has created -->
-            <section class="created-quizes-act">
-            </section>
+            <article class="created-quizes-act">
+            </article>
 
-            <section class="achievements">
-            </section>
+            <artilce class="achievements">
+            </artilce>
 
             <!-- Should be list of friends recent activities i.e. taken quizes,
              achievemetns, etc. also here should be links to friends profiles and quizes
              -->
-            <section class="friends-act">
-            </section>
+            <article class="friends-act">
+            </article>
+            <article class="history">
+                <% if (historyList.isEmpty()) { %>
+                <p>No quiz history available for this user.</p>
+                <% } else { %>
+                <table>
+                    <tr>
+                        <th>Quiz ID</th>
+                        <th>Grade</th>
+                        <th>Duration</th>
+                        <th>Try Again</th>
+                    </tr>
+                    <% int size = Math.min(historyList.size(), 10);
+                        for (int i = 0; i < size; i++) {
+                            History history = historyList.get(i);
+                    %>
+                    <tr>
+                        <td><%= history.getQuizId() %></td>
+                        <td><%= history.getGrade() %></td>
+                        <td><%= history.getDuration() %></td>
+                        <td><a href="/quiz?quiz_id=<%= history.getQuizId() %>">Do it again</a></td>
+                    </tr>
+                    <% } %>
+                </table>
+                <% } %>
+                <a href="history.jsp">Click here to view history</a>
+            </article>
         </main>
         <aside>
             <%
