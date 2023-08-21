@@ -21,6 +21,10 @@ public class Challenge {
         this.quizId = quizId;
     }
 
+    public void setChallengeId(int challengeId) {
+        this.challengeId = challengeId;
+    }
+
     public String getFromUsername() {
         return this.fromUsername;
     }

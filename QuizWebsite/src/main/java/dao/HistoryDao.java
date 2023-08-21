@@ -37,9 +37,7 @@ public class HistoryDao {
                 Time duration = set.getTime("duration");
                 histories.add(new History(historyId, userId, quizId, grade, duration));
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (SQLException e) {}
         return histories;
     }
 
@@ -61,8 +59,6 @@ public class HistoryDao {
             ResultSet set = statement.getGeneratedKeys();
             set.next();
             history.setHistoryId(set.getInt(1));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (SQLException e) {}
     }
 }

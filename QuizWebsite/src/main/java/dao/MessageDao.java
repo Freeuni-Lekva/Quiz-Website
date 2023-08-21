@@ -7,35 +7,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MessageDao {
-    Connection conn;
+    private Connection conn;
 
     public MessageDao(Connection conn) {
         this.conn = conn;
     }
-
     public void addMessage(Message message) {
         PreparedStatement ps;
         try {
-            ps = this.conn.prepareStatement("INSERT INTO messages(from_username, to_username, message, sent_date) VALUES(?,?,?,?)");
+            ps = this.conn.prepareStatement("INSERT INTO messages(from_username, to_username, message, sent_date) VALUES(?,?,?,?)",
+                    PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setString(1, message.getFromUsername());
             ps.setString(2, message.getToUsername());
             ps.setString(3, message.getMessage());
             ps.setTimestamp(4, message.getSentDate());
             ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+            ResultSet set = ps.getGeneratedKeys();
+            set.next();
+            message.setMessageId(set.getInt(1));
+        } catch (SQLException e) {}
     }
 
-    public void deleteMessage(Message message) {
+    public void deleteMessage(int messageId) {
         PreparedStatement ps;
         try {
             ps = this.conn.prepareStatement("DELETE FROM messages where id = ?");
-            ps.setInt(1, message.getMessageId());
+            ps.setInt(1, messageId);
             ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (SQLException e) {}
     }
 
     public List<Message> getMessagesOfUser(String username) {
@@ -54,9 +53,7 @@ public class MessageDao {
                 Message msg = new Message(messageId, fromUsername, toUsername, message, sentDate);
                 messages.add(msg);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (SQLException e) {}
 
         return messages;
     }

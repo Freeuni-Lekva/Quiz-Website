@@ -19,13 +19,15 @@ public class FriendRequestDao {
     public void createFriendRequest(FriendRequest req) {
         PreparedStatement ps;
         try {
-            ps = this.conn.prepareStatement("INSERT INTO friend_requests(from_username, to_username) VALUES(?, ?)");
+            ps = this.conn.prepareStatement("INSERT INTO friend_requests(from_username, to_username) VALUES(?, ?)",
+                    PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setString(1, req.getFromUsername());
             ps.setString(2, req.getToUsername());
             ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+            ResultSet set = ps.getGeneratedKeys();
+            set.next();
+            req.setId(set.getInt(1));
+        } catch (SQLException e) {}
     }
 
     public void deleteFriendRequest(FriendRequest req) {
@@ -35,9 +37,7 @@ public class FriendRequestDao {
             ps.setString(1, req.getFromUsername());
             ps.setString(2, req.getToUsername());
             ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (SQLException e) {}
     }
 
     public List<FriendRequest> getFriendRequests(String username) {
@@ -54,9 +54,7 @@ public class FriendRequestDao {
                 FriendRequest req = new FriendRequest(requestId, fromUsername, toUsername);
                 requests.add(req);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (SQLException e) {}
         return requests;
     }
 }
