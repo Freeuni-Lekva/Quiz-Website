@@ -81,183 +81,206 @@
         <artilce class="achievements">
         </artilce>
 
-            <!-- Should be list of friends recent activities i.e. taken quizes,
-             achievemetns, etc. also here should be links to friends profiles and quizes
-             -->
-            <article class="friends-act">
-            </article>
-            <article class="history">
-                <% if (historyList.isEmpty()) { %>
-                <p>No quiz history available for this user.</p>
-                <% } else { %>
-                <table>
-                    <tr>
-                        <th>Quiz ID</th>
-                        <th>Grade</th>
-                        <th>Duration</th>
-                        <th>Try Again</th>
-                    </tr>
-                    <% int size = Math.min(historyList.size(), 10);
-                        for (int i = 0; i < size; i++) {
-                            History history = historyList.get(i);
-                    %>
-                    <tr>
-                        <td><%= history.getQuizId() %></td>
-                        <td><%= history.getGrade() %></td>
-                        <td><%= history.getDuration() %></td>
-                        <td><a href="/quiz?quiz_id=<%= history.getQuizId() %>">Do it again</a></td>
-                    </tr>
-                    <% } %>
-                </table>
+        <!-- Should be list of friends recent activities i.e. taken quizes,
+         achievemetns, etc. also here should be links to friends profiles and quizes
+         -->
+        <article class="friends-act">
+        </article>
+        <article class="history">
+            <% if (historyList.isEmpty()) { %>
+            <p>No quiz history available for this user.</p>
+            <% } else { %>
+            <table>
+                <tr>
+                    <th>Quiz ID</th>
+                    <th>Grade</th>
+                    <th>Duration</th>
+                    <th>Try Again</th>
+                </tr>
+                <% int size = Math.min(historyList.size(), 10);
+                    for (int i = 0; i < size; i++) {
+                        History history = historyList.get(i);
+                %>
+                <tr>
+                    <td><%= history.getQuizId() %>
+                    </td>
+                    <td><%= history.getGrade() %>
+                    </td>
+                    <td><%= history.getDuration() %>
+                    </td>
+                    <td><a href="/quiz?quiz_id=<%= history.getQuizId() %>">Do it again</a></td>
+                </tr>
                 <% } %>
-                <a href="history.jsp">Click here to view history</a>
-            </article>
-            <div class="Announcements">
-                <br>
-                <h3>Announcements:</h3>
-                <ul>
-                    <%
-                        List<Announcement> announcements = null;
-                        try {
-                            announcements = announcementsDao.getAll();
-                        } catch (SQLException e) {
-                            throw new RuntimeException(e);
-                        }
-
-                        for (Announcement announcement : announcements) {
-                    %>
-                    <li>
-                        <%= new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(announcement.getDate()) %><br>
-                        <%= announcement.getText() %>
-                    </li>
-                    <%
-                        }
-                        if ("admin".equals(user.getUserType())) {
-                    %>
-                    <form action="AddAnnouncementServlet" method="post">
-                        <label>
-                            <textarea name="newAnnouncement" rows="5" cols="40"></textarea>
-                        </label><br>
-                        <input type="submit" value="Add Announcement">
-                    </form>
-                    <%
-                        }
-                    %>
-                </ul>
-            </div>
+            </table>
+            <% } %>
+            <a href="history.jsp">Click here to view history</a>
+        </article>
+        <div class="Announcements">
             <br>
-            <div class="quizzes">
-                <h3>Challenge Yourself: </h3>
-                <ul>
-                    <%
-                        List<Quiz> quizzes = null;
-                        try {
-                            quizzes = quizDao.getQuizzes();
-                        } catch (SQLException e) {
-                            throw new RuntimeException(e);
-                        }
-                        for (Quiz quiz : quizzes) {
-                    %>
-                    <li>
-                        <p>
-                            <a href="/quiz?id=<%= quiz.getId() %>">
-                                <%= quiz.getName() %> has Challenged you, click here to start
-                            </a>
-                        </p>
-                    </li>
-                    <%
-                        }
-                    %>
-                </ul>
-            </div>
+            <h3>Announcements:</h3>
+            <ul>
+                <%
+                    List<Announcement> announcements = null;
+                    try {
+                        announcements = announcementsDao.getAll();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
 
-        </main>
-        <aside>
-            <%
-                FriendRequestDao friendsReqs = (FriendRequestDao) request.getServletContext().getAttribute("friend_requests");
-                MessageDao messageDao = (MessageDao) request.getServletContext().getAttribute("messages");
-                ChallengeDao challengeDao = (ChallengeDao) request.getServletContext().getAttribute("challenges");
-                List<FriendRequest> reqsList = friendsReqs.getFriendRequests(user.getUsername());
-                List<Message> messages = messageDao.getMessagesOfUser(user.getUsername());
-                List<Challenge> challenges = challengeDao.getChallenges(user.getUsername());
-            %>
-            <div class="requests">
-                <h3>Friend Requests: </h3>
-                <ul>
-                    <%
-                        for (FriendRequest req : reqsList) {
-                    %>
-                    <li id="req-<%= req.getFromUsername() %>">
-                        <p><%= req.getFromUsername() %></p>
-                        <div>
-                            <button class="acc-btn">Accept</button>
-                            <button class="rej-btn">Reject</button>
-                        </div>
-                    </li>
-                    <%
-                        }
-                    %>
-                </ul>
-            </div>
-            <div class="challenges">
-                <h3>Quiz Challenges: </h3>
-                <ul>
-                    <%
-                        for (Challenge challenge : challenges) {
-                    %>
-                    <li>
-                        <p>
-                            <a href="/quiz?id=<%= challenge.getQuizId() %>">
-                                <%= challenge.getFromUsername() %> has Challenged you, click here to start
-                            </a>
-                        </p>
-                    </li>
-                    <%
-                        }
-                    %>
-                </ul>
-            </div>
-            <div class="notes">
-                <h3>Notes: </h3>
-                <ul>
-                    <%
-                        for (Message message : messages) {
-                    %>
-                    <li>
-                        <p><strong>From:</strong> <%= message.getFromUsername() %></p>
-                        <p><strong>Message:</strong> <%= message.getMessage() %></p>
-                        <p><strong>Sent at:</strong>
-                            <%=
-                            new SimpleDateFormat("HH:mm dd-MM-yyyy").format(message.getSentDate())
-                            %></p>
-                    </li>
-                    <%
-                        }
-                    %>
-                </ul>
-            </div>
-
-            <div class="chat">
-                <button id="chat-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M160 368c26.5 0 48 21.5 48 48v16l72.5-54.4c8.3-6.2 18.4-9.6 28.8-9.6H448c8.8 0 16-7.2 16-16V64c0-8.8-7.2-16-16-16H64c-8.8 0-16 7.2-16 16V352c0 8.8 7.2 16 16 16h96zm48 124l-.2 .2-5.1 3.8-17.1 12.8c-4.8 3.6-11.3 4.2-16.8 1.5s-8.8-8.2-8.8-14.3V474.7v-6.4V468v-4V416H112 64c-35.3 0-64-28.7-64-64V64C0 28.7 28.7 0 64 0H448c35.3 0 64 28.7 64 64V352c0 35.3-28.7 64-64 64H309.3L208 492z"/></svg>
-                    Compose note
-                </button>
-                <form class="chat-form">
-                    <div class="remove-button-parent">
-                        <button class="remove-btn">&#10006;</button>
-                    </div>
-                    <div class="form-group">
-                        <label for="recipient">To:</label>
-                        <input type="text" id="recipient" name="recipient" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message:</label>
-                        <textarea id="message" name="message" rows="5" cols="40" required></textarea>
-                    </div>
-                    <button class="send-btn" type="submit">Send</button>
+                    for (Announcement announcement : announcements) {
+                %>
+                <li>
+                    <%= new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(announcement.getDate()) %><br>
+                    <%= announcement.getText() %>
+                </li>
+                <%
+                    }
+                    if ("admin".equals(user.getUserType())) {
+                %>
+                <form action="AddAnnouncementServlet" method="post">
+                    <label>
+                        <textarea name="newAnnouncement" rows="5" cols="40"></textarea>
+                    </label><br>
+                    <input type="submit" value="Add Announcement">
                 </form>
-            </div>
-        </aside>
+                <%
+                    }
+                %>
+            </ul>
+        </div>
+        <br>
+        <div class="quizzes">
+            <h3>Challenge Yourself: </h3>
+            <ul>
+                <%
+                    List<Quiz> quizzes = null;
+                    try {
+                        quizzes = quizDao.getQuizzes();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                    for (Quiz quiz : quizzes) {
+                %>
+                <li>
+                    <p>
+                        <a href="/quiz?id=<%= quiz.getId() %>">
+                            <%= quiz.getName() %> has Challenged you, click here to start
+                        </a>
+                    </p>
+                </li>
+                <%
+                    }
+                %>
+            </ul>
+        </div>
+
+    </main>
+    <aside>
+        <%
+            FriendRequestDao friendsReqs = (FriendRequestDao) request.getServletContext().getAttribute("friend_requests");
+            MessageDao messageDao = (MessageDao) request.getServletContext().getAttribute("messages");
+            ChallengeDao challengeDao = (ChallengeDao) request.getServletContext().getAttribute("challenges");
+            List<FriendRequest> reqsList = friendsReqs.getFriendRequests(user.getUsername());
+            List<Message> messages = messageDao.getMessagesOfUser(user.getUsername());
+            List<Challenge> challenges = challengeDao.getChallenges(user.getUsername());
+        %>
+        <%
+            String userType = user.getUserType();
+            if ("admin".equals(userType)) {
+        %>
+        <div class="chat">
+            <a class="nav-item nav-link"
+               href="<%=request.getContextPath()%>/createQuizServlet?userId=<%=user.getId()%>">Create
+                Quiz</a>
+        </div>
+        <%
+            }
+        %>
+        <div class="requests">
+            <h3>Friend Requests: </h3>
+            <ul>
+                <%
+                    for (FriendRequest req : reqsList) {
+                %>
+                <li id="req-<%= req.getFromUsername() %>">
+                    <p><%= req.getFromUsername() %>
+                    </p>
+                    <div>
+                        <button class="acc-btn">Accept</button>
+                        <button class="rej-btn">Reject</button>
+                    </div>
+                </li>
+                <%
+                    }
+                %>
+            </ul>
+        </div>
+        <div class="challenges">
+            <h3>Quiz Challenges: </h3>
+            <ul>
+                <%
+                    for (Challenge challenge : challenges) {
+                %>
+                <li>
+                    <p>
+                        <a href="/quiz?id=<%= challenge.getQuizId() %>">
+                            <%= challenge.getFromUsername() %> has Challenged you, click here to start
+                        </a>
+                    </p>
+                </li>
+                <%
+                    }
+                %>
+            </ul>
+        </div>
+        <div class="notes">
+            <h3>Notes: </h3>
+            <ul>
+                <%
+                    for (Message message : messages) {
+                %>
+                <li>
+                    <p><strong>From:</strong> <%= message.getFromUsername() %>
+                    </p>
+                    <p><strong>Message:</strong> <%= message.getMessage() %>
+                    </p>
+                    <p><strong>Sent at:</strong>
+                        <%=
+                        new SimpleDateFormat("HH:mm dd-MM-yyyy").format(message.getSentDate())
+                        %>
+                    </p>
+                </li>
+                <%
+                    }
+                %>
+            </ul>
+        </div>
+
+        <div class="chat">
+            <button id="chat-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+                    <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                    <path d="M160 368c26.5 0 48 21.5 48 48v16l72.5-54.4c8.3-6.2 18.4-9.6 28.8-9.6H448c8.8 0 16-7.2 16-16V64c0-8.8-7.2-16-16-16H64c-8.8 0-16 7.2-16 16V352c0 8.8 7.2 16 16 16h96zm48 124l-.2 .2-5.1 3.8-17.1 12.8c-4.8 3.6-11.3 4.2-16.8 1.5s-8.8-8.2-8.8-14.3V474.7v-6.4V468v-4V416H112 64c-35.3 0-64-28.7-64-64V64C0 28.7 28.7 0 64 0H448c35.3 0 64 28.7 64 64V352c0 35.3-28.7 64-64 64H309.3L208 492z"/>
+                </svg>
+                Compose note
+            </button>
+            <form class="chat-form">
+                <div class="remove-button-parent">
+                    <button class="remove-btn">&#10006;</button>
+                </div>
+                <div class="form-group">
+                    <label for="recipient">To:</label>
+                    <input type="text" id="recipient" name="recipient" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" rows="5" cols="40" required></textarea>
+                </div>
+                <button class="send-btn" type="submit">Send</button>
+            </form>
+        </div>
+    </aside>
+</div>
 <script src="js/friends.js"></script>
 <script src="js/search.js"></script>
 <script src="js/message.js"></script>

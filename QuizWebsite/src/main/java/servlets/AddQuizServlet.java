@@ -38,7 +38,7 @@ public class AddQuizServlet extends HttpServlet {
 
 
             AnswersDao answersDao = (AnswersDao) request.getServletContext().getAttribute("answersDao");
-            QuizDao quizDao = (QuizDao) request.getServletContext().getAttribute("quizDao");
+            QuizDao quizDao = (QuizDao) request.getServletContext().getAttribute("quizzes");
             QuestionsDao questionsDao = (QuestionsDao) request.getServletContext().getAttribute("questionsDao");
             for (int i = 1; i <= numQuestions; i++) {
                 String questionText = request.getParameter("questionText" + i);
@@ -55,13 +55,13 @@ public class AddQuizServlet extends HttpServlet {
 
 
                 if (question != null) {
+                    questionsDao.addQuestion(question);
                     String answer1 = request.getParameter("answer1" + i);
                     String answer2 = request.getParameter("answer2" + i);
                     String answer3 = request.getParameter("answer3" + i);
                     String answer4 = request.getParameter("answer4" + i);
                     answersDao.addAnswers(question.getQuestionId(), answer1, answer2, answer3, answer4);
                     quiz.addQuestion(question);
-                    questionsDao.addQuestion(question);
                 }
             }
 
