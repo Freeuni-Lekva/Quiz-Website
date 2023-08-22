@@ -1,11 +1,12 @@
 package models;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
 
 public class Quiz {
-    private final int id;
+    private int id;
     private final String name;
     private final String description;
     private final int duration;
@@ -21,6 +22,18 @@ public class Quiz {
     public Quiz(int id, String name, String description, int duration, boolean random_questions,
                 boolean multiple_pages, boolean immediate_feedback, int author_id) {
         this.id = id;
+        this.name = name;
+        this.description = description;
+        this.duration = duration;
+        this.random_questions = random_questions;
+        this.multiple_pages = multiple_pages;
+        this.immediate_feedback = immediate_feedback;
+        this.author_id = author_id;
+        questionList = new ArrayList<>();
+    }
+
+    public Quiz(String name, String description, int duration, boolean random_questions,
+                boolean multiple_pages, boolean immediate_feedback, int author_id) {
         this.name = name;
         this.description = description;
         this.duration = duration;
