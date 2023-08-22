@@ -37,7 +37,7 @@ public class PasswordGenerator {
 	 such as "234a6f". with 2 chars for each byte in the array.
 	 (provided code)
 	*/
-    private static String hexToString(byte[] bytes) {
+    public static String hexToString(byte[] bytes) {
         StringBuffer buff = new StringBuffer();
         for (int i=0; i<bytes.length; i++) {
             int val = bytes[i];

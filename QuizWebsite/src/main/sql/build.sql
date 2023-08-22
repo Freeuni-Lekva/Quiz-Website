@@ -104,3 +104,10 @@ CREATE TABLE IF NOT EXISTS history (
     FOREIGN KEY (quiz_id) REFERENCES quizzes(quiz_id) ON DELETE CASCADE
 );
 
+CREATE TABLE announcements (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    date TIMESTAMP,
+    text TEXT
+);
+
+
