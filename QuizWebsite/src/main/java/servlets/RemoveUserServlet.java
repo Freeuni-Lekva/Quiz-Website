@@ -11,22 +11,22 @@ import dao.UsersDao;
 public class RemoveUserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
             throws ServletException, IOException {
+
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         String userId = httpServletRequest.getParameter("id");
 
         if (userId != null) {
             ServletContext servletContext = httpServletRequest.getServletContext();
             UsersDao usersDao = (UsersDao) servletContext.getAttribute("users");
             usersDao.removeUser(Integer.parseInt(userId));
-
             // Redirect the user to the homepage or any other desired page
-            httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/home");
+            httpServletRequest.getRequestDispatcher("/homepage.jsp").forward(httpServletRequest, httpServletResponse);
+
         } else {
             // Handle error case, perhaps show an error message or redirect to an error page
         }
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
     }
 }

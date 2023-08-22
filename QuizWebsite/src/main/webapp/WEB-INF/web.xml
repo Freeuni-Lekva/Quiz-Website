@@ -38,6 +38,10 @@
     <servlet-name>removeUser</servlet-name>
     <servlet-class>servlets.RemoveUserServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>friendRequest</servlet-name>
+    <servlet-class>servlets.FriendRequestServlet</servlet-class>
+  </servlet>
 
 
   <servlet-mapping>
@@ -67,6 +71,10 @@
   <servlet-mapping>
     <servlet-name>removeUser</servlet-name>
     <url-pattern>/removeUserServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>friendRequest</servlet-name>
+    <url-pattern>/friendRequestServlet</url-pattern>
   </servlet-mapping>
 
 

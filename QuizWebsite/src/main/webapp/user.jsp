@@ -102,16 +102,6 @@
                         var response = JSON.parse(xhr.responseText);
                         if (response.success) {
                             alert("Friend request sent successfully!");
-                            <%
-                                // Retrieve the FriendRequestDao from the application scope
-                                FriendRequestDao friendRequests = (FriendRequestDao) application.getAttribute("friend_requests");
-
-                                // Create a new FriendRequest object
-                                FriendRequest newFriendRequest = new FriendRequest(userId, id);
-
-                                // Call the createFriendRequest method and add the new friend request
-                                friendRequests.createFriendRequest(newFriendRequest);
-                            %>
                         } else {
                             alert("Error sending friend request: " + response.message);
                         }
@@ -121,8 +111,8 @@
                     }
                 }
             };
-
-            var url = "user?id=2";
+            console.log(userId + " This is")
+            var url = "friendRequestServlet?id=" + <%= userId %> + "&secId=" + <%= id %>;
 
             xhr.open("POST", url, true);
             xhr.send(null);
@@ -151,7 +141,7 @@
                     }
                 };
 
-                var url = "removeUser?id=" + <%= id %>;
+                var url = "removeUserServlet?id=" + <%= id %>;
 
                 xhr.open("POST", url, true);
                 xhr.send(null);
