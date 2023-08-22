@@ -23,7 +23,7 @@ public class RemoveUserServlet extends HttpServlet {
             UsersDao usersDao = (UsersDao) servletContext.getAttribute("users");
             usersDao.removeUser(Integer.parseInt(userId));
             // Redirect the user to the homepage or any other desired page
-            httpServletRequest.getRequestDispatcher("/homepage.jsp").forward(httpServletRequest, httpServletResponse);
+            httpServletRequest.getRequestDispatcher("homepage.jsp").forward(httpServletRequest, httpServletResponse);
 
         } else {
             // Handle error case, perhaps show an error message or redirect to an error page

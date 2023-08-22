@@ -35,7 +35,7 @@
         if(!isFriend) friendRequestSent = friendRequestDao.getFriendRequests(userId).contains(id);
     }else{
         request.setAttribute("errorMessage", "Error: User not found!");
-        request.getRequestDispatcher("/error.jsp").forward(request, response);
+        request.getRequestDispatcher("error.jsp").forward(request, response);
     }
 %>
 <html>
@@ -95,6 +95,7 @@
         function sendFriendRequest() {
             // Perform the AJAX request
             var xhr = new XMLHttpRequest();
+
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
@@ -111,7 +112,6 @@
                     }
                 }
             };
-            console.log(userId + " This is")
             var url = "friendRequestServlet?id=" + <%= userId %> + "&secId=" + <%= id %>;
 
             xhr.open("POST", url, true);
@@ -120,7 +120,6 @@
 
 
         function removeAccount() {
-            // Perform the logic to remove the account
             var confirmRemove = confirm("Are you sure you want to remove this account?");
             if (confirmRemove) {
                 var xhr = new XMLHttpRequest();

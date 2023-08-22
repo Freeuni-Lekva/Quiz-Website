@@ -29,7 +29,7 @@ public class FriendRequestServlet extends HttpServlet {
         System.out.println(userId + id);
         // Call the createFriendRequest method and add the new friend request
         friendRequests.createFriendRequest(newFriendRequest);
-        //httpServletRequest.getRequestDispatcher("user?id="+userId).forward(httpServletRequest, httpServletResponse);
+        httpServletRequest.getRequestDispatcher("user?id="+userId).forward(httpServletRequest, httpServletResponse);
 
     }
 }
