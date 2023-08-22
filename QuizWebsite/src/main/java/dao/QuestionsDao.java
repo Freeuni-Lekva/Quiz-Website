@@ -83,8 +83,6 @@ public class QuestionsDao {
             statement.executeUpdate();
             ResultSet rs = statement.getGeneratedKeys();
             rs.next();
-            int questionId = rs.getInt("question_id");
-            question.setQuestionId(questionId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

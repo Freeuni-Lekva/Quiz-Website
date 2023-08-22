@@ -20,7 +20,7 @@ import java.io.IOException;
 public class AddQuizServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            String quizName = request.getParameter("quizName");
+            String quizName = (String) request.getAttribute("quizName");
             int numQuestions = Integer.parseInt(request.getParameter("numQuestions"));
             User user = (User) request.getSession().getAttribute("loggedUser");
             int userId = user.getId();
