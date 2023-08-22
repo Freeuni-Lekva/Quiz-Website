@@ -20,14 +20,15 @@ public class ChallengeDao {
         PreparedStatement ps;
         try {
             ps = this.conn.prepareStatement("INSERT INTO challenges(from_username, to_username, quiz_id) " +
-                    "VALUES(?, ?, ?)");
+                    "VALUES(?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setString(1, ch.getFromUsername());
             ps.setString(2, ch.getToUsername());
             ps.setInt(3, ch.getQuizId());
             ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+            ResultSet set = ps.getGeneratedKeys();
+            set.next();
+            ch.setChallengeId(set.getInt(1));
+        } catch (SQLException e) {}
     }
 
     public void deleteChallenge(Challenge ch) {
@@ -39,9 +40,7 @@ public class ChallengeDao {
             ps.setString(2, ch.getToUsername());
             ps.setInt(3, ch.getQuizId());
             ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (SQLException e) {}
     }
 
     public List<Challenge> getChallenges(String username) {
@@ -60,9 +59,7 @@ public class ChallengeDao {
                 challenges.add(ch);
             }
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (SQLException e) {}
         return challenges;
     }
 }
