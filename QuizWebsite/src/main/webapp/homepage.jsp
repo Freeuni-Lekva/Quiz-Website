@@ -28,6 +28,8 @@
     java.util.Calendar cal = java.util.Calendar.getInstance();
     int hour = cal.get(java.util.Calendar.HOUR_OF_DAY);
     AnnouncementsDao announcementsDao = (AnnouncementsDao) request.getServletContext().getAttribute("announcements");
+    QuizDao quizDao = (QuizDao) request.getServletContext().getAttribute("quizzes");
+
     // Decide the greeting based on the current hour
     String greeting;
     if (hour >= 0 && hour < 12) {
@@ -140,6 +142,32 @@
                     %>
                 </ul>
             </div>
+            <br>
+            <div class="quizzes">
+                <h3>Challenge Yourself: </h3>
+                <ul>
+                    <%
+                        List<Quiz> quizzes = null;
+                        try {
+                            quizzes = quizDao.getQuizzes();
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
+                        for (Quiz quiz : quizzes) {
+                    %>
+                    <li>
+                        <p>
+                            <a href="/quiz?id=<%= quiz.getId() %>">
+                                <%= quiz.getName() %> has Challenged you, click here to start
+                            </a>
+                        </p>
+                    </li>
+                    <%
+                        }
+                    %>
+                </ul>
+            </div>
+
         </main>
         <aside>
             <%
@@ -186,7 +214,6 @@
                     %>
                 </ul>
             </div>
-
             <div class="notes">
                 <h3>Notes: </h3>
                 <ul>
