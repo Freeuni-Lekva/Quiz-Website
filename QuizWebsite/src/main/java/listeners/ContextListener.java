@@ -30,6 +30,7 @@ public class ContextListener implements ServletContextListener {
         AnswersDao answersDao = new AnswersDao(conn);
         QuizDao quizDao = new QuizDao(conn);
         QuestionsDao questionsDao = new QuestionsDao(conn, answersDao);
+        AnnouncementsDao announcementsDao = new AnnouncementsDao(conn);
         servletContextEvent.getServletContext().setAttribute("users", users);
         servletContextEvent.getServletContext().setAttribute("friends", friends);
         servletContextEvent.getServletContext().setAttribute("messages", messages);
@@ -37,8 +38,10 @@ public class ContextListener implements ServletContextListener {
         servletContextEvent.getServletContext().setAttribute("challenges", challenges);
         servletContextEvent.getServletContext().setAttribute("history", historyDao);
         servletContextEvent.getServletContext().setAttribute("answersDao", answersDao);
-        servletContextEvent.getServletContext().setAttribute("quizDao", quizDao);
         servletContextEvent.getServletContext().setAttribute("questionsDao", questionsDao);
+        servletContextEvent.getServletContext().setAttribute("quizzes", quizDao);
+        servletContextEvent.getServletContext().setAttribute("announcements", announcementsDao);
+
     }
 
     @Override
