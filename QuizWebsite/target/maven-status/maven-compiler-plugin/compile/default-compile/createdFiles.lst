@@ -5,7 +5,6 @@ test\TestLogin$MockUsersDao.class
 dao\QuestionsDao.class
 servlets\SearchServlet.class
 models\Register.class
-servlets\QuestionServlet.class
 servlets\RegisterServlet.class
 dao\UsersDao.class
 models\User.class

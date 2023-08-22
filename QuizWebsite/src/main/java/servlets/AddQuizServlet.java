@@ -47,7 +47,6 @@ public class AddQuizServlet extends HttpServlet {
                 // Create Question using QuestionBuilder
                 Question question = QuestionBuilder.create(
                         answersDao,
-                        i,
                         questionText,
                         questionType,
                         pictureUrl,
@@ -60,7 +59,7 @@ public class AddQuizServlet extends HttpServlet {
                     String answer2 = request.getParameter("answer2" + i);
                     String answer3 = request.getParameter("answer3" + i);
                     String answer4 = request.getParameter("answer4" + i);
-                    answersDao.addAnswers(i, answer1, answer2, answer3, answer4);
+                    answersDao.addAnswers(question.getQuestionId(), answer1, answer2, answer3, answer4);
                     quiz.addQuestion(question);
                     questionsDao.addQuestion(question);
                 }
