@@ -14,7 +14,9 @@
     <input type="number" id="numQuestions" name="numQuestions" min="1" max="10" required><br><br>
 
     <% int numQuestions = Integer.parseInt(request.getParameter("numQuestions")); %>
-    <% String quizName = request.getParameter("quizName"); %>
+    <% String quizName = request.getParameter("quizName");
+        request.getSession().setAttribute("quizName", quizName);
+    %>
 
     <% for (int i = 1; i <= numQuestions; i++) { %>
     <h3>Question <%= i %>

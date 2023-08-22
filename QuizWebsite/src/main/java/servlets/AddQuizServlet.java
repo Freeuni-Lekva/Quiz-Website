@@ -20,7 +20,7 @@ import java.io.IOException;
 public class AddQuizServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            String quizName = (String) request.getAttribute("quizName");
+            String quizName = (String) request.getSession().getAttribute("quizName");
             int numQuestions = Integer.parseInt(request.getParameter("numQuestions"));
             User user = (User) request.getSession().getAttribute("loggedUser");
             int userId = user.getId();
@@ -40,6 +40,8 @@ public class AddQuizServlet extends HttpServlet {
             AnswersDao answersDao = (AnswersDao) request.getServletContext().getAttribute("answersDao");
             QuizDao quizDao = (QuizDao) request.getServletContext().getAttribute("quizzes");
             QuestionsDao questionsDao = (QuestionsDao) request.getServletContext().getAttribute("questionsDao");
+            quizDao.addQuiz(quiz);
+
             for (int i = 1; i <= numQuestions; i++) {
                 String questionText = request.getParameter("questionText" + i);
                 String questionType = request.getParameter("questionType" + i);
@@ -65,7 +67,6 @@ public class AddQuizServlet extends HttpServlet {
                 }
             }
 
-            quizDao.addQuiz(quiz);
             response.sendRedirect("homepage.jsp");
         } catch (Exception e) {
             e.printStackTrace();
