@@ -30,6 +30,15 @@
     <servlet-name>message</servlet-name>
     <servlet-class>servlets.MessageServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>user</servlet-name>
+    <servlet-class>servlets.UserServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>removeUser</servlet-name>
+    <servlet-class>servlets.RemoveUserServlet</servlet-class>
+  </servlet>
+
 
   <servlet-mapping>
     <servlet-name>login</servlet-name>
@@ -51,6 +60,15 @@
     <servlet-name>message</servlet-name>
     <url-pattern>/message/MessageServlet</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>user</servlet-name>
+    <url-pattern>/user</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>removeUser</servlet-name>
+    <url-pattern>/removeUserServlet</url-pattern>
+  </servlet-mapping>
+
 
   <!-- Define a default welcome file for the web application -->
   <welcome-file-list>

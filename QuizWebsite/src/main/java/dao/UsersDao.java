@@ -122,4 +122,13 @@ public class UsersDao {
             statement.executeUpdate();
         } catch (SQLException e) {}
     }
+
+    public void removeUser(int userId) {
+        PreparedStatement statement = null;
+        try {
+            statement = conn.prepareStatement("DELETE FROM users WHERE user_id = ?");
+            statement.setString(1, String.valueOf(userId));
+            statement.executeUpdate();
+        } catch (SQLException e) {}
+    }
 }
