@@ -28,12 +28,14 @@ public class ContextListener implements ServletContextListener {
         ChallengeDao challenges = new ChallengeDao(conn);
         HistoryDao historyDao = new HistoryDao(conn);
         AnnouncementsDao announcementsDao = new AnnouncementsDao(conn);
+        QuizDao quizDao = new QuizDao(conn);
         servletContextEvent.getServletContext().setAttribute("users", users);
         servletContextEvent.getServletContext().setAttribute("friends", friends);
         servletContextEvent.getServletContext().setAttribute("messages", messages);
         servletContextEvent.getServletContext().setAttribute("friend_requests", friendRequests);
         servletContextEvent.getServletContext().setAttribute("challenges", challenges);
         servletContextEvent.getServletContext().setAttribute("history", historyDao);
+        servletContextEvent.getServletContext().setAttribute("quizzes", quizDao);
         servletContextEvent.getServletContext().setAttribute("announcements", announcementsDao);
 
     }
