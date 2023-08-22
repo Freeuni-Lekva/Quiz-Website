@@ -4,7 +4,8 @@
 <%@ page import="java.util.stream.Collectors" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="dao.*" %>
-<%@ page import="models.*" %><%--
+<%@ page import="models.*" %>
+<%@ page import="java.sql.SQLException" %><%--
   Created by IntelliJ IDEA.
   User: nika
   Date: 30.07.23
@@ -26,7 +27,7 @@
     List<History> historyList = historyDao.getHistory(user.getId());
     java.util.Calendar cal = java.util.Calendar.getInstance();
     int hour = cal.get(java.util.Calendar.HOUR_OF_DAY);
-
+    AnnouncementsDao announcementsDao = (AnnouncementsDao) request.getServletContext().getAttribute("announcements");
     // Decide the greeting based on the current hour
     String greeting;
     if (hour >= 0 && hour < 12) {
@@ -106,6 +107,39 @@
                 <% } %>
                 <a href="history.jsp">Click here to view history</a>
             </article>
+            <div class="Announcements">
+                <br>
+                <h3>Announcements:</h3>
+                <ul>
+                    <%
+                        List<Announcement> announcements = null;
+                        try {
+                            announcements = announcementsDao.getAll();
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                        for (Announcement announcement : announcements) {
+                    %>
+                    <li>
+                        <%= new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(announcement.getDate()) %><br>
+                        <%= announcement.getText() %>
+                    </li>
+                    <%
+                        }
+                        if ("admin".equals(user.getUserType())) {
+                    %>
+                    <form action="AddAnnouncementServlet" method="post">
+                        <label>
+                            <textarea name="newAnnouncement" rows="5" cols="40"></textarea>
+                        </label><br>
+                        <input type="submit" value="Add Announcement">
+                    </form>
+                    <%
+                        }
+                    %>
+                </ul>
+            </div>
         </main>
         <aside>
             <%
@@ -194,7 +228,6 @@
                 </form>
             </div>
         </aside>
-    </div>
 <script src="js/friends.js"></script>
 <script src="js/search.js"></script>
 <script src="js/message.js"></script>

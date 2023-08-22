@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class ConnectionManager {
     private static final String user = "root";
-    private static final String password = "root";
+    private static final String password = "freeuni2023";
     private static final String db_name = "QuizWebsite";
 
     public static Connection getConnection() throws ClassNotFoundException, SQLException {
