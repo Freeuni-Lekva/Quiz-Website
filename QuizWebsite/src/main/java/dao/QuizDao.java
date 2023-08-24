@@ -1,6 +1,7 @@
 package dao;
 
 import models.Quiz;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -35,7 +36,7 @@ public class QuizDao {
     }
 
     public void addQuiz(Quiz quiz) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO quizzes VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
+        PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO quizzes VALUES(?, ?, ?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
         preparedStatement.setInt(1, quiz.getId());
         preparedStatement.setString(2, quiz.getName());
         preparedStatement.setString(3, quiz.getDescription());
@@ -45,6 +46,14 @@ public class QuizDao {
         preparedStatement.setBoolean(7, quiz.immediateFeedback());
         preparedStatement.setInt(8, quiz.getAuthorId());
         preparedStatement.executeUpdate();
+
+        ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+        if (generatedKeys.next()) {
+            int generatedId = generatedKeys.getInt(1);
+            quiz.setId(generatedId);
+        } else {
+            throw new SQLException("Failed to get generated ID for the quiz.");
+        }
     }
 
     public void deleteQuiz(int id) throws SQLException {
