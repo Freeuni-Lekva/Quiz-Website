@@ -224,7 +224,7 @@
                 %>
                 <li>
                     <p>
-                        <a href="/quiz?id=<%= challenge.getQuizId() %>">
+                        <a href="/QuizServlet?id=<%= challenge.getQuizId() %>">
                             <%= challenge.getFromUsername() %> has Challenged you, click here to start
                         </a>
                     </p>

@@ -115,5 +115,13 @@
     <%
         }
     %>
+    <br>
+    <form action="ChallengeServlet" method="post">
+        <h3>Challenge <%= user.getUsername() %></h3>
+        <label for="quizId">Enter Quiz ID:</label>
+        <input type="text" id="quizId" name="quizId">
+        <input type="hidden" name="username" value="<%= user.getUsername() %>">
+        <input type="submit" value="Challenge">
+    </form>
 </body>
 </html>
