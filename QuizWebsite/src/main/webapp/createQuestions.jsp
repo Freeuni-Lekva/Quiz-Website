@@ -6,7 +6,7 @@
     <title>Quiz Question Management</title>
 </head>
 <body>
-
+<a href="homepage.jsp">Home</a>
 <h1>Quiz Question Management</h1>
 
 <form method="post" action="addQuizServlet">

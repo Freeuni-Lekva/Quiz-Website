@@ -21,6 +21,7 @@
     <title><%=quiz.getName()%></title>
 </head>
 <body>
+    <a href="homepage.jsp">Home</a>
     <h1><%=quiz.getName()%></h1>
     <h2><%=quiz.getDescription()%></h2>
     <%

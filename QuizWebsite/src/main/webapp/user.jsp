@@ -79,6 +79,7 @@
     </title>
 </head>
 <body>
+    <a href="homepage.jsp">Home</a>
     <h1><%= user.getUsername() %></h1>
     <% if (!isFriend & !friendRequestSent) { %>
         <button id="sendFriendRequestBtn" onclick="sendFriendRequest()">Send Friend Request</button>

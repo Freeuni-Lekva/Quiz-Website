@@ -16,6 +16,7 @@
     <title>QuizResult</title>
 </head>
 <body>
+<a href="homepage.jsp">Home</a>
 <h1>Your final result:</h1>
 <%
     Boolean failed = (Boolean) request.getAttribute("failed");

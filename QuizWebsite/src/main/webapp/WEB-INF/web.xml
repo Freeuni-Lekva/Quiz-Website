@@ -42,6 +42,10 @@
         <servlet-name>removeUser</servlet-name>
         <servlet-class>servlets.RemoveUserServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>logout</servlet-name>
+        <servlet-class>servlets.LogoutServlet</servlet-class>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>login</servlet-name>
@@ -74,6 +78,10 @@
     <servlet-mapping>
         <servlet-name>removeUser</servlet-name>
         <url-pattern>/removeUserServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>logout</servlet-name>
+        <url-pattern>/LogoutServlet</url-pattern>
     </servlet-mapping>
 
     <!-- Define a default welcome file for the web application -->

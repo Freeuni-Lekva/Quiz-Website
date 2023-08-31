@@ -45,6 +45,7 @@
 <div id="username" style="display: none;">
     <%= user.getUsername() %>
 </div>
+<a href="logout">Logout</a>
 <header class="search-container">
     <h1 class="greet-header"><%= greeting %> <%= user.getUsername() %>
     </h1>
