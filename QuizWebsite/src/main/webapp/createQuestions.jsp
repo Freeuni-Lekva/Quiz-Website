@@ -10,9 +10,6 @@
 <h1>Quiz Question Management</h1>
 
 <form method="post" action="addQuizServlet">
-    <label for="numQuestions">Number of Questions:</label>
-    <input type="number" id="numQuestions" name="numQuestions" min="1" max="10" required><br><br>
-
     <% int numQuestions = Integer.parseInt(request.getParameter("numQuestions")); %>
     <% String quizName = request.getParameter("quizName");
         request.getSession().setAttribute("quizName", quizName);

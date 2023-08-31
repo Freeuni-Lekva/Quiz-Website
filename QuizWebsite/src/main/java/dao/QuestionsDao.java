@@ -69,7 +69,7 @@ public class QuestionsDao {
         try {
             PreparedStatement statement = connection
                     .prepareStatement("INSERT INTO questions " +
-                                    "(question_content, question_type, picture_url, answer, quiz_id) " +
+                                    "(question_content, question_type, picture_url, quiz_id, answer) " +
                                     "VALUES (?, ?, ?, ?, ?)",
                             PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setString(1, question.getQuestion());
