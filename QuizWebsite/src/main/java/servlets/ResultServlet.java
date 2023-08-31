@@ -1,5 +1,7 @@
 package servlets;
 
+import dao.HistoryDao;
+import models.*;
 import dao.AnswersDao;
 import dao.QuestionsDao;
 import models.MultipleQuestion;
@@ -13,12 +15,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Time;
 import java.util.List;
 
 @WebServlet("/ResultServlet")
 public class ResultServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
+        User user = (User) httpServletRequest.getSession().getAttribute("loggedUser");
         Quiz quiz = (Quiz) httpServletRequest.getSession().getAttribute("quiz");
         QuestionsDao questionsDao = (QuestionsDao) httpServletRequest.getServletContext().getAttribute("questionsDao");
         AnswersDao answersDao = (AnswersDao) httpServletRequest.getServletContext().getAttribute("answersDao");
@@ -59,6 +63,9 @@ public class ResultServlet extends HttpServlet {
         httpServletRequest.setAttribute("failed", failed);
         httpServletRequest.setAttribute("sum", sum);
         httpServletRequest.setAttribute("duration", duration);
+        History history = new History(user.getId(), quiz.getId(), sum, new Time(duration));
+        HistoryDao historyDao = (HistoryDao) httpServletRequest.getServletContext().getAttribute("history");
+        historyDao.addHistory(history);
         httpServletRequest.getRequestDispatcher("quizResult.jsp").forward(httpServletRequest, httpServletResponse);
     }
 }
