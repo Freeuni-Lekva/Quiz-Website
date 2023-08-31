@@ -9,7 +9,7 @@
         <listener-class>listeners.ContextListener</listener-class>
     </listener>
 
-    <!-- Define servlets and their mappings -->
+  <!-- Define servlets and their mappings -->
     <servlet>
         <servlet-name>login</servlet-name>
         <servlet-class>servlets.LoginServlet</servlet-class>
@@ -59,7 +59,6 @@
         <servlet-name>quiz</servlet-name>
         <url-pattern>/quiz/QuizServlet</url-pattern>
     </servlet-mapping>
-
 
     <!-- Define a default welcome file for the web application -->
     <welcome-file-list>
