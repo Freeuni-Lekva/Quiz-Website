@@ -1,5 +1,7 @@
 package servlets;
 
+import dao.AnswersDao;
+import dao.QuestionsDao;
 import models.MultipleQuestion;
 import models.Question;
 import models.QuestionType;
@@ -18,13 +20,15 @@ public class ResultServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         Quiz quiz = (Quiz) httpServletRequest.getSession().getAttribute("quiz");
+        QuestionsDao questionsDao = (QuestionsDao) httpServletRequest.getServletContext().getAttribute("questionsDao");
+        AnswersDao answersDao = (AnswersDao) httpServletRequest.getServletContext().getAttribute("answersDao");
         quiz.endQuiz();
         long time = quiz.calculateDuration();
-        boolean failed = true;
+        boolean failed = false;
         long duration = time / 60000;
-        if (time <= quiz.getDuration() * 60000L) {
-            failed = false;
-        }
+//        if (time <= quiz.getDuration() * 60000L) {
+//            failed = false;
+//        }
         List<Question> list = (List<Question>) httpServletRequest.getSession().getAttribute("questions");
         double sum = (double) 0;
         int n = 1;
@@ -33,12 +37,11 @@ public class ResultServlet extends HttpServlet {
             Question question = list.get(i);
             if (question.getType().equals(QuestionType.MULTIPLE_CHOICE)) {
                 MultipleQuestion multipleQuestion = (MultipleQuestion) question;
-                for (int k = 0; k < multipleQuestion.getChoices().size(); k++) {
-                    String answer1 = httpServletRequest.getParameter("answer" + n);
+                int choicesSize = answersDao.getAnswers(question.getQuestionId()).size();
+                for (int k = 0; k < choicesSize; k++) {
+                    String answer1 = httpServletRequest.getParameter("answer" + i);
                     if (answer1 != null && !answer1.isEmpty()) {
                         answer = answer1;
-                        System.out.println(answer1);
-
                     }
                     n++;
                 }

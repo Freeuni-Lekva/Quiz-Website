@@ -45,4 +45,9 @@ public class SingleQuestion extends Question {
             this.answers.add(answer); // Add each correct answer to the HashSet.
         }
     }
+
+    @Override
+    public String getAnswer() {
+        return null;
+    }
 }

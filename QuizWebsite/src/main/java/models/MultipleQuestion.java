@@ -1,5 +1,6 @@
 package models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
  * all possible choices visible for user is store in the List
  * answer is only one and store in the private string
  */
-public class MultipleQuestion extends Question {
+public class MultipleQuestion extends Question implements Serializable {
     private List<String> choices;
     private String answer;
     public MultipleQuestion(String question, String type) {
@@ -35,6 +36,11 @@ public class MultipleQuestion extends Question {
     @Override
     public void addAnswer(String... answers) {
         answer = answers[0];
+    }
+
+    @Override
+    public String getAnswer() {
+        return this.answer;
     }
 
     /**
