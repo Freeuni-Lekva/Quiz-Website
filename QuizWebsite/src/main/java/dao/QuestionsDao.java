@@ -50,7 +50,8 @@ public class QuestionsDao {
                 String questionContent = resultSet.getString("question_content");
                 String questionType = resultSet.getString("question_type");
                 String pictureUrl = resultSet.getString("picture_url");
-                questions.add(QuestionBuilder.create(answersDao, questionId, questionContent, questionType, pictureUrl, quizId));
+                String answer = resultSet.getString("answer");
+                questions.add(QuestionBuilder.create(answersDao, questionId, questionContent, questionType, pictureUrl, answer, quizId));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -68,8 +69,8 @@ public class QuestionsDao {
         try {
             PreparedStatement statement = connection
                     .prepareStatement("INSERT INTO questions " +
-                                    "(question_content, question_type, picture_url, quiz_id) " +
-                                    "VALUES (?, ?, ?, ?)",
+                                    "(question_content, question_type, picture_url, answer, quiz_id) " +
+                                    "VALUES (?, ?, ?, ?, ?)",
                             PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setString(1, question.getQuestion());
             statement.setString(2, question.getType());
@@ -79,6 +80,7 @@ public class QuestionsDao {
             } else {
                 statement.setNull(3, java.sql.Types.NULL);
             }
+            statement.setString(5, question.getAnswer());
             statement.setInt(4, question.getQuizId());
             statement.executeUpdate();
             ResultSet rs = statement.getGeneratedKeys();

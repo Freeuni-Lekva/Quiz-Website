@@ -46,12 +46,16 @@ public class AddQuizServlet extends HttpServlet {
                 String questionText = request.getParameter("questionText" + i);
                 String questionType = request.getParameter("questionType" + i);
                 String pictureUrl = request.getParameter("pictureUrl" + i);
+                String correctAnswerIndexStr = request.getParameter("correctAnswer" + i);
+                int correctAnswerIndexInt = Integer.parseInt(correctAnswerIndexStr);
+                String correctAnswer = request.getParameter("answer" + correctAnswerIndexInt + i);
                 // Create Question using QuestionBuilder
                 Question question = QuestionBuilder.create(
                         answersDao,
                         questionText,
                         questionType,
                         pictureUrl,
+                        correctAnswer,
                         quiz.getId()
                 );
 

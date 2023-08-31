@@ -3,7 +3,9 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Collections" %>
 <%@ page import="models.QuestionType" %>
-<%@ page import="models.MultipleQuestion" %><%--
+<%@ page import="models.MultipleQuestion" %>
+<%@ page import="dao.QuestionsDao" %>
+<%@ page import="dao.AnswersDao" %><%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 8/21/2023
@@ -22,8 +24,10 @@
     <h1><%=quiz.getName()%></h1>
     <h2><%=quiz.getDescription()%></h2>
     <%
-        List<Question> questions = quiz.getQuestions();
-
+        QuestionsDao questionsDao = (QuestionsDao) request.getServletContext().getAttribute("questionsDao");
+        AnswersDao answersDao = (AnswersDao) request.getServletContext().getAttribute("answersDao");
+        List<Question> questions = questionsDao.getQuestions(quiz.getId());
+        out.println(questions.size());
         if (quiz.randomQuestions()) {
             Collections.shuffle(questions);
         }
@@ -42,11 +46,11 @@
                     out.println("<input type=\"text\" name=\"answer" + n + "\" placeholder=\"Your answer\">");
                     n++;
                 } else if (question.getType().equals(QuestionType.MULTIPLE_CHOICE)) {
-                    MultipleQuestion multipleQuestion = (MultipleQuestion)question;
-                    List<String> choices = multipleQuestion.getChoices();
+                    MultipleQuestion multipleQuestion = (MultipleQuestion) question;
+                    List<String> choices = answersDao.getAnswers(question.getQuestionId());
 
                     for (String choice: choices) {
-                        out.println("<input type=\"radio\" name=\"answer" + n + "\" value=\"" + choice + "\">" + choice + "<br>");
+                        out.println("<input type=\"radio\" name=\"answer"+ i + "\" value=\"" + choice + "\">" + choice + "<br>");
                         n++;
                     }
                 } else if (question.getType().equals(QuestionType.PICTURE_QUESTION)) {

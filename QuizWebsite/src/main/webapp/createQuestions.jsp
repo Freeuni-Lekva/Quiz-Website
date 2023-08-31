@@ -28,9 +28,9 @@
     <label for="questionType<%= i %>">Question Type:</label>
     <select id="questionType<%= i %>" name="questionType<%= i %>" required>
         <option value="multiple_choice">Multiple Choice</option>
-        <option value="fill_the_blank">Fill the Blank</option>
+<%--        <option value="fill_the_blank">Fill the Blank</option>--%>
         <option value="picture_question">Picture Question</option>
-        <option value="request_response">Request Response</option>
+<%--        <option value="request_response">Request Response</option>--%>
     </select><br>
 
     <label for="answer1<%= i %>">Answer 1:</label>

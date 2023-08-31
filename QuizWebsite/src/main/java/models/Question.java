@@ -40,6 +40,8 @@ public abstract class Question {
      */
     public abstract void addAnswer(String... answers);
 
+    public abstract String getAnswer();
+
     /**
      * Getter method to retrieve the text of the question.
      *

@@ -163,7 +163,7 @@
                 %>
                 <li>
                     <p>
-                        <a href="/quiz?id=<%= quiz.getId() %>">
+                        <a href="/QuizServlet?id=<%= quiz.getId() %>">
                             <%= quiz.getName() %> has Challenged you, click here to start
                         </a>
                     </p>
