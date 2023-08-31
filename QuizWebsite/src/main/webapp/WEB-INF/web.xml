@@ -46,6 +46,10 @@
         <servlet-name>logout</servlet-name>
         <servlet-class>servlets.LogoutServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>friendRequest</servlet-name>
+        <servlet-class>servlets.FriendRequestServlet</servlet-class>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>login</servlet-name>
@@ -82,6 +86,10 @@
     <servlet-mapping>
         <servlet-name>logout</servlet-name>
         <url-pattern>/LogoutServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>friendRequest</servlet-name>
+        <url-pattern>/FriendRequestServlet</url-pattern>
     </servlet-mapping>
 
     <!-- Define a default welcome file for the web application -->

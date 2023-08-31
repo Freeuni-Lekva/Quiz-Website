@@ -1,10 +1,9 @@
-<%@ page import="dao.UsersDao" %>
 <%@ page import="models.User" %>
-<%@ page import="dao.FriendsDao" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="dao.FriendRequestDao" %>
 <%@ page import="models.FriendRequest" %>
+<%@ page import="models.History" %>
+<%@ page import="dao.*" %>
 
 <%--
   Created by IntelliJ IDEA.
@@ -18,7 +17,8 @@
     User user = null;
     List<User> friendsList = new ArrayList<User>();
     String id = request.getParameter("id");
-    String userId = (String) request.getAttribute("loggedUser");
+    User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+    int userId = loggedUser.getId();
     FriendRequestDao friendRequestDao;
     boolean isFriend = false;
     boolean friendRequestSent = false;
@@ -29,10 +29,10 @@
         user = users.getUser(Integer.parseInt(id));
         List<Integer> friendsId = friends.getFriends(Integer.parseInt(id));
         for(int fId : friendsId){
-            friendsList.add(users.getUser(String.valueOf(fId)));
-            if(fId == Integer.parseInt(userId)) isFriend = true;
+            friendsList.add(users.getUser(fId));
+            if(fId == userId) isFriend = true;
         }
-        if(!isFriend) friendRequestSent = friendRequestDao.getFriendRequests(userId).contains(id);
+        if(!isFriend) friendRequestSent = friendRequestDao.getFriendRequests(String.valueOf(userId)).contains(id);
     }else{
         request.setAttribute("errorMessage", "Error: User not found!");
         request.getRequestDispatcher("error.jsp").forward(request, response);
@@ -82,72 +82,15 @@
     <a href="homepage.jsp">Home</a>
     <h1><%= user.getUsername() %></h1>
     <% if (!isFriend & !friendRequestSent) { %>
-        <button id="sendFriendRequestBtn" onclick="sendFriendRequest()">Send Friend Request</button>
+        <a href="friendRequest?username=<%= user.getUsername() %>">Send Friend Request</a>
     <% } %>
     <% if (isFriend) { %>
         <p><%= user.getUsername() %> is your friend</p>
     <% } %>
     <% if ("admin".equals(user.getUserType())) { %>
-        <button id="removeAccountBtn" onclick="removeAccount()">Remove Account</button>
+        <a href="removeUser?id=<%= user.getUsername() %>">Remove Account</a>
     <% } %>
-    <button id="removeAccountBtn" onclick="removeAccount()">Remove Account</button>
 
-    <script>
-        function sendFriendRequest() {
-            // Perform the AJAX request
-            var xhr = new XMLHttpRequest();
-
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                        // Request was successful
-                        var response = JSON.parse(xhr.responseText);
-                        if (response.success) {
-                            alert("Friend request sent successfully!");
-                        } else {
-                            alert("Error sending friend request: " + response.message);
-                        }
-                    } else {
-                        // Request failed
-                        alert("An error occurred while sending the friend request " + xhr.status);
-                    }
-                }
-            };
-            var url = "friendRequestServlet?id=" + <%= userId %> + "&secId=" + <%= id %>;
-
-            xhr.open("POST", url, true);
-            xhr.send(null);
-        }
-
-
-        function removeAccount() {
-            var confirmRemove = confirm("Are you sure you want to remove this account?");
-            if (confirmRemove) {
-                var xhr = new XMLHttpRequest();
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState === 4) {
-                        if (xhr.status === 200) {
-                            // Request was successful
-                            var response = JSON.parse(xhr.responseText);
-                            if (response.success) {
-                                alert("Account removed successfully!");
-                            } else {
-                                alert("Error removing account: " + response.message);
-                            }
-                        } else {
-                            // Request failed
-                            alert("An error occurred while removing the account " + xhr.status);
-                        }
-                    }
-                };
-
-                var url = "removeUserServlet?id=" + <%= id %>;
-
-                xhr.open("POST", url, true);
-                xhr.send(null);
-            }
-        }
-    </script>
     <h2>Friends</h2>
     <ul>
         <% for (User friend : friendsList) { %>
@@ -157,5 +100,20 @@
         <% } %>
     </ul>
     <h2><%= user.getUsername() %>'s Activity</h2>
+    <%
+        ServletContext servletContext = request.getServletContext();
+        HistoryDao historyDao = (HistoryDao) servletContext.getAttribute("history");
+        QuizDao quizDao = (QuizDao) servletContext.getAttribute("quizzes");
+        UsersDao usersDao = (UsersDao) servletContext.getAttribute("users");
+        User users = (User) request.getSession().getAttribute("loggedUser");
+        List<History> historyList = historyDao.getHistory(user.getId());
+        for (History history : historyList) { %>
+    <li>
+        <%= quizDao.getQuiz(history.getQuizId()).getName() %>
+        <%= history.getGrade() %>
+    </li>
+    <%
+        }
+    %>
 </body>
 </html>
