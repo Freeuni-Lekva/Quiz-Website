@@ -84,6 +84,7 @@ CREATE TABLE IF NOT EXISTS questions (
     question_content VARCHAR(5000),
     question_type VARCHAR(100),
     picture_url VARCHAR(200),
+    answer VARCHAR(100),
     quiz_id INT REFERENCES quizzes (quiz_id) ON DELETE CASCADE
 );
 
@@ -103,4 +104,11 @@ CREATE TABLE IF NOT EXISTS history (
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
     FOREIGN KEY (quiz_id) REFERENCES quizzes(quiz_id) ON DELETE CASCADE
 );
+
+CREATE TABLE announcements (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    date TIMESTAMP,
+    text TEXT
+);
+
 
