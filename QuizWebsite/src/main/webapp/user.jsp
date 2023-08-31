@@ -87,8 +87,8 @@
     <% if (isFriend) { %>
         <p><%= user.getUsername() %> is your friend</p>
     <% } %>
-    <% if ("admin".equals(user.getUserType())) { %>
-        <a href="removeUser?id=<%= user.getUsername() %>">Remove Account</a>
+    <% if ("admin".equals(loggedUser.getUserType())) { %>
+        <a href="removeUser?id=<%= user.getId() %>">Remove Account</a>
     <% } %>
 
     <h2>Friends</h2>

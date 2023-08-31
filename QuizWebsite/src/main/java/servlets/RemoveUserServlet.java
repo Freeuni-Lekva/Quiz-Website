@@ -7,11 +7,11 @@ import java.io.IOException;
 
 import dao.UsersDao;
 
-@WebServlet(name = "RemoveUserServlet", value = "/RemoveUserServlet")
+@WebServlet("/removeUser")
 public class RemoveUserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
             throws ServletException, IOException {
-
+        doPost(httpServletRequest, httpServletResponse);
     }
 
     @Override
