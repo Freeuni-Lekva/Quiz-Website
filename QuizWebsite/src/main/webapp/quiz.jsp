@@ -27,7 +27,6 @@
         QuestionsDao questionsDao = (QuestionsDao) request.getServletContext().getAttribute("questionsDao");
         AnswersDao answersDao = (AnswersDao) request.getServletContext().getAttribute("answersDao");
         List<Question> questions = questionsDao.getQuestions(quiz.getId());
-        out.println(questions.size());
         if (quiz.randomQuestions()) {
             Collections.shuffle(questions);
         }

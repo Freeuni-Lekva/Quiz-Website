@@ -42,7 +42,6 @@
 <li>
     <%= usersDao.getUser(history.getUserId()).getUsername() %>
     <%= history.getGrade() %>
-    <%= history.getDuration() %>
 </li>
 <%
     }

@@ -21,7 +21,7 @@ public class AddQuizServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             String quizName = (String) request.getSession().getAttribute("quizName");
-            int numQuestions = Integer.parseInt(request.getParameter("numQuestions"));
+            int numQuestions = (int) request.getSession().getAttribute("numQuestions");
             User user = (User) request.getSession().getAttribute("loggedUser");
             int userId = user.getId();
             System.out.println(quizName + numQuestions);
