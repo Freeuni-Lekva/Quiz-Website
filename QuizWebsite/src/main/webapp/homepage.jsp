@@ -109,7 +109,7 @@
                     </td>
                     <td><%= history.getDuration() %>
                     </td>
-                    <td><a href="/quiz?quiz_id=<%= history.getQuizId() %>">Do it again</a></td>
+                    <td><a href="/QuizServlet?id=<%= history.getQuizId() %>">Do it again</a></td>
                 </tr>
                 <% } %>
             </table>
