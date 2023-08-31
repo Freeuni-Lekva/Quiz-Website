@@ -34,6 +34,14 @@
         <servlet-name>quiz</servlet-name>
         <servlet-class>servlets.QuizServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>user</servlet-name>
+        <servlet-class>servlets.UserServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>removeUser</servlet-name>
+        <servlet-class>servlets.RemoveUserServlet</servlet-class>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>login</servlet-name>
@@ -58,6 +66,14 @@
     <servlet-mapping>
         <servlet-name>quiz</servlet-name>
         <url-pattern>/quiz/QuizServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>user</servlet-name>
+        <url-pattern>/user</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>removeUser</servlet-name>
+        <url-pattern>/removeUserServlet</url-pattern>
     </servlet-mapping>
 
     <!-- Define a default welcome file for the web application -->
